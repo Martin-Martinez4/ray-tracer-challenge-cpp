@@ -33,3 +33,5 @@
 
 build/
 .clangd
+CMakeFiles/
+_deps/
