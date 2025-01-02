@@ -17,6 +17,7 @@ set(sources ${sources}
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Tuple.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/Floats.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Matrix.cpp
 )
 
 add_executable(

@@ -1,17 +1,15 @@
 #include "Floats.h"
 #include "Tuple.h"
 #include "iostream"
+#include "Matrix.h"
 
 int main(){
 
-  Tuple t1 = Tuple(1, 2, 3);
-  Tuple t2 = Tuple(1, 2, 3);
-
-  Tuple t3 = t1.addTuple(t2);
-
-  std::cout << t3 << "\n";
-
-  std::cout << ((0 - -0) < EPSILON) << "\n";
+  Matrix2x2 mat = Matrix2x2{ (std::array<std::array<float, 2>, 2>){ {{1, 1}, {2, 2}} } };
+  Matrix2x2& t = mat.test();
+  std::cout << t.size << "\n";
+  std::cout << t.get(0, 0) << "\n";
+  std::cout << mat.get(1,1) << "\n";
   
   return 0;
 }
