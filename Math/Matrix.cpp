@@ -61,6 +61,38 @@ Matrix Matrix::matrixMultiply(Matrix const& otherMatrix) const{
     return newMatrix;
 }
 
+ Matrix Matrix::subMatrix(size_t row, size_t column){
+
+    if(size <= 2){
+        throw std::invalid_argument("matrix too small to subMatrix");
+    }
+
+    Matrix tempMatrix = Matrix(size - 1);
+
+    size_t newRow = 0;
+
+    for(size_t y = 0; y < size; ++y){
+        if(y == row){
+            continue;
+        }else{
+            size_t newColumn = 0;
+
+            for(size_t x = 0; x < size; ++x){
+                if(x == column){
+                    continue;
+                }else{
+                    tempMatrix.set(newRow, newColumn, get(y, x));
+                    newColumn++;
+                }
+            }
+        }
+
+        newRow++;
+    }
+
+    return tempMatrix;
+ }
+
 // Matrix Matrix::identityMatrix(size_t size){
 
 // }

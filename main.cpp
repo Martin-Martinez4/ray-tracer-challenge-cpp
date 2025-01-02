@@ -2,6 +2,7 @@
 #include "Tuple.h"
 #include "iostream"
 #include "Matrix.h"
+#include <array>
 
 int main(){
 
@@ -13,6 +14,8 @@ int main(){
 
   std::cout << "scalared :" << "\n";
   std::cout << scalared << "\n";
+
+
   
   
   return 0;

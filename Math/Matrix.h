@@ -15,6 +15,7 @@
 */
 class Matrix {
 public:
+  Matrix():size{4}, matrix{std::vector<float>(size*size, 0)}{}
   Matrix(size_t size):size{size}, matrix{std::vector<float>(size*size, 0)}{}
   Matrix(std::array<float, 4> arr):size{2}, matrix(std::begin(arr), std::end(arr)){}
   Matrix(std::array<float, 9> arr):size{3}, matrix(std::begin(arr), std::end(arr)){}
@@ -26,8 +27,9 @@ public:
   void set(size_t x, size_t y, float value) ;
   bool equal(Matrix const& otherMatrix) const;
   Matrix scalarMultiply(float scalar) const;
-
   Matrix matrixMultiply(Matrix const& otherMatrix) const;
+
+  Matrix subMatrix(size_t row, size_t column);
 
   static Matrix identityMatrix(size_t size);
 

@@ -49,6 +49,7 @@ set(test_sources ${test_sources}
 
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Tuple_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Floats_tests.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Matrix_tests.cpp
 )
 
 add_executable(
