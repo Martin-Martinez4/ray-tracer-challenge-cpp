@@ -389,39 +389,34 @@ TEST(MatrixTest, Matrix4x4Cofactor){
   }
 }
 
-TEST(MatrixTest, Matrix4x4Determinate){
+TEST(MatrixTest, MatrixIdentity){
 
   struct test {
-    Matrix m1;
-    float want;
+    size_t size;
+    Matrix want;
   };
   
-  const size_t numTests = 4;
+  const size_t numTests = 3;
 
   test tests[numTests] = {
     {
-      Matrix{std::array<float, 16>{10, 1, 20, 2, 0.10f, 10, 0.20f, 20, 8, 51, 10, 1, 0.5f, 7, 0.25f, 4}},
-      -1573.4248f,
+      2,
+      Matrix{std::array<float, 4>{1,0, 0,1}},
     },
     {
-      Matrix{std::array<float, 16>{1, 1, 2, 2, 1, 1, 2, 2, 4, 5, 1, 1, 5, 7, 5, 4}},
-      0
+      3,
+      Matrix{std::array<float, 9>{1,0,0, 0,1,0 ,0,0,1}},
     },
     {
-      Matrix{std::array<float, 16>{35, 14, 93, 62, 85, 84, 56, 84, 84, 62, 96, 92, 49, 46, 22, 28}},
-      656256
+      4,
+      Matrix{std::array<float, 16>{1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1}},
     },
-    {
-      Matrix{std::array<float, 16>{-2, -8, 3, 5, -3, 1, 7, 3, 1, 2, -9, 6, -6, 7, 7, -9 }},
-       -4071
-    },
-   
     
   };
   
   for(size_t i = 0; i < numTests; i++){
     test test = tests[i];
-    EXPECT_TRUE(FloatsEqual(test.m1.determinate(), test.want)) << " got: " << test.m1.determinate() << " want: " << test.want; 
+    EXPECT_EQ(Matrix::identityMatrix(test.size), test.want);
   }
 }
 
@@ -451,7 +446,7 @@ TEST(MatrixTest, Matrix4x4TupleMultiply){
   }
 }
 
-// static identity
+
 
 TEST(MatrixTest, CofactorMatrix){
 
