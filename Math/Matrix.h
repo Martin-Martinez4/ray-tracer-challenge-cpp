@@ -8,6 +8,7 @@
 #include <vector>
 #include <ostream>
 #include "Floats.h"
+#include "Tuple.h"
 #include <array>
 
 /*
@@ -34,9 +35,10 @@ public:
   float determinate() const;
   float minor(size_t row, size_t column) const;
   float cofactor(size_t row, size_t column) const;
+  Matrix cofactorMatrix() const;
+  Matrix inverse() const;
+
   bool isInvertible() const;
-
-
   static Matrix identityMatrix(size_t size);
 
   Matrix& operator=(const Matrix & other){
@@ -74,6 +76,9 @@ private:
   std::vector<float> matrix;
 
 };
+
+Tuple tupleMultiply(Matrix const& matrix, Tuple const& tuple);
+
 
 
 

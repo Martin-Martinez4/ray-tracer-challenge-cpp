@@ -96,12 +96,12 @@ Matrix Matrix::transpose() const{
                     continue;
                 }else{
                     tempMatrix.set(newRow, newColumn, get(y, x));
-                    newColumn++;
+                    ++newColumn;
                 }
             }
         }
 
-        newRow++;
+        ++newRow;
     }
 
     return tempMatrix;
@@ -113,7 +113,7 @@ float Matrix::determinate() const {
   }else{
     float acc = 0;
     for(size_t y = 0; y < size; ++y){
-      acc += cofactor(0, y) * get(0, y);
+      acc += get(0, y)*cofactor(0, y);
     }
 
     return acc;
@@ -121,8 +121,7 @@ float Matrix::determinate() const {
 }
 
 float Matrix::minor(size_t row, size_t column) const{
-  Matrix temp = subMatrix(row, column);
-  return temp.determinate();
+  return subMatrix(row, column).determinate();
 }
 
 float Matrix::cofactor(size_t row, size_t column) const {
@@ -132,10 +131,47 @@ float Matrix::cofactor(size_t row, size_t column) const {
     return -1 * minor(row, column);
   }
 }
+Matrix Matrix::cofactorMatrix() const{
+    Matrix cofactorMatrix = Matrix(size);
 
-// Matrix Matrix::identityMatrix(size_t size){
+    for(size_t row = 0; row < size; ++row){
+        for(size_t column = 0; column< size; ++column){
+            cofactorMatrix.set(row, column, cofactor(row, column));
+        }   
+    }
 
-// }
+    return cofactorMatrix;
+}
+
+// very expensive operation
+Matrix Matrix::inverse() const{
+    float determinate = this->determinate();
+
+    if(determinate == 0){
+        throw std::invalid_argument("function is not invertable");
+    }else{
+        float factor = 1/ determinate;
+        
+        return cofactorMatrix().transpose().scalarMultiply(factor);
+    }
+
+    float factor = 1/ determinate;
+
+}
+
+bool Matrix::isInvertible() const{
+    return determinate() != 0;
+}
+
+Matrix Matrix::identityMatrix(size_t size){
+    Matrix mat = Matrix(size);
+
+    for(size_t i = 0; i < size; ++i){
+        mat.set(i, i, 1);
+    }
+
+    return mat;
+}
 
 std::ostream& operator<<(std::ostream &os, const Matrix& m){
 
@@ -150,7 +186,23 @@ std::ostream& operator<<(std::ostream &os, const Matrix& m){
     }
 
     return os;
+};
+
+Tuple tupleMultiply(Matrix const& matrix, Tuple const& tuple){
+
+    
+    if(matrix.size != 4){
+        throw std::invalid_argument("tried to tuple matrix multiply with a matrix that is not of size 4");
+    }
+
+    return Tuple{
+        matrix.get(0, 0)*tuple.x + matrix.get(0, 1)*tuple.y + matrix.get(0, 2)*tuple.z + matrix.get(0, 3)*tuple.w,
+		matrix.get(1, 0)*tuple.x + matrix.get(1, 1)*tuple.y + matrix.get(1, 2)*tuple.z + matrix.get(1, 3)*tuple.w,
+		matrix.get(2, 0)*tuple.x + matrix.get(2, 1)*tuple.y + matrix.get(2, 2)*tuple.z + matrix.get(2, 3)*tuple.w,
+		matrix.get(3, 0)*tuple.x + matrix.get(3, 1)*tuple.y + matrix.get(3, 2)*tuple.z + matrix.get(3, 3)*tuple.w,
+    };
 }
+
 
 
 

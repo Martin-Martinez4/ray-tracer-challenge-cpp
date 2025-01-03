@@ -13,7 +13,7 @@ int main(){
   std::cout << mat << "\n";
 
   std::cout << "scalared :" << "\n";
-  std::cout << scalared << "\n";
+  std::cout << tupleMultiply(mat, Tuple{1,2,3,1}) << "\n";
 
 
   
