@@ -4,10 +4,10 @@
 
 // More functional approach?
 
+#include <cstddef>
 #include <vector>
 #include <ostream>
-#include <algorithm>
-#include <functional>
+#include "Floats.h"
 #include <array>
 
 /*
@@ -28,8 +28,14 @@ public:
   bool equal(Matrix const& otherMatrix) const;
   Matrix scalarMultiply(float scalar) const;
   Matrix matrixMultiply(Matrix const& otherMatrix) const;
+  Matrix transpose() const;
 
-  Matrix subMatrix(size_t row, size_t column);
+  Matrix subMatrix(size_t row, size_t column) const;
+  float determinate() const;
+  float minor(size_t row, size_t column) const;
+  float cofactor(size_t row, size_t column) const;
+  bool isInvertible() const;
+
 
   static Matrix identityMatrix(size_t size);
 
@@ -40,6 +46,25 @@ public:
     }
 
     return *this;
+  }
+
+  bool operator==(Matrix const& otherMatrix) const{
+    if(otherMatrix.size != size) {
+        return false;
+    }
+
+    for(size_t x = 0; x < size; ++x){
+        for(size_t y = 0; y < size; ++y){
+            if(!FloatsEqual(get(x, y), otherMatrix.get(x, y))){
+                return false;
+            }
+        }   
+    }
+
+    return true;
+
+    
+
   }
 
   friend std::ostream& operator<<(std::ostream &os, const Matrix& m);

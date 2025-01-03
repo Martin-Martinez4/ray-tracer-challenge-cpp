@@ -1,15 +1,17 @@
 #include "Matrix.h"
 #include "Tuple.h"
+#include <cstddef>
 #include <stdexcept>
 #include <iostream>
 #include <ostream>
+#include<algorithm>
 
 float Matrix::get(size_t x, size_t y) const{
-    return matrix[x + y*size];
+    return matrix[y + x*size];
 }
 
 void Matrix::set(size_t x, size_t y, float value) {
-    matrix[x + y * size] = value; 
+    matrix[y + x * size] = value; 
 }
 
 Matrix Matrix::scalarMultiply(float scalar) const{
@@ -61,7 +63,19 @@ Matrix Matrix::matrixMultiply(Matrix const& otherMatrix) const{
     return newMatrix;
 }
 
- Matrix Matrix::subMatrix(size_t row, size_t column){
+Matrix Matrix::transpose() const{
+  Matrix temp = Matrix(size);
+
+  for(size_t y = 0; y < size; ++y){
+    for(size_t x = 0; x < size; ++x){
+      temp.set(x, y, get(y,x));
+    }
+  }
+
+  return temp;
+}
+
+ Matrix Matrix::subMatrix(size_t row, size_t column) const{
 
     if(size <= 2){
         throw std::invalid_argument("matrix too small to subMatrix");
@@ -92,6 +106,32 @@ Matrix Matrix::matrixMultiply(Matrix const& otherMatrix) const{
 
     return tempMatrix;
  }
+
+float Matrix::determinate() const {
+  if(size == 2){
+    return get(0,0)*get(1,1) - get(0,1)*get(1,0);
+  }else{
+    float acc = 0;
+    for(size_t y = 0; y < size; ++y){
+      acc += cofactor(0, y) * get(0, y);
+    }
+
+    return acc;
+  }
+}
+
+float Matrix::minor(size_t row, size_t column) const{
+  Matrix temp = subMatrix(row, column);
+  return temp.determinate();
+}
+
+float Matrix::cofactor(size_t row, size_t column) const {
+  if((row+column)%2 == 0){
+    return minor(row, column);
+  }else{
+    return -1 * minor(row, column);
+  }
+}
 
 // Matrix Matrix::identityMatrix(size_t size){
 

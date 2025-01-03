@@ -6,7 +6,7 @@
 
 int main(){
 
-  Matrix mat = Matrix{std::array<float, 16>{{1,1,1,1, 1,1,1,1, 1,1,1,1 ,1,1,1,1}}};
+  Matrix mat = Matrix{std::array<float, 16>{{1,1,1,1, 2,2,2,2, 3,3,3,3 ,4,4,4,4}}};
   Matrix scalared = (mat.scalarMultiply(2));
 
   std::cout << "old :" << "\n";
