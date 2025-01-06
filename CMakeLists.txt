@@ -23,11 +23,20 @@ set(sources ${sources}
   
   ${CMAKE_CURRENT_SOURCE_DIR}/Parse/PPM.cpp
 
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Shape.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Sphere.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Intersection.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Ray.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Sphere.cpp
   
   ${CMAKE_CURRENT_SOURCE_DIR}/World/Canvas.cpp
+
+  # ${CMAKE_CURRENT_SOURCE_DIR}/exercises/red_circle.cpp
+)
+
+
+set(sources ${sources}
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/exercises/red_circle.cpp
 )
 
 add_executable(
@@ -35,6 +44,13 @@ add_executable(
   main.cpp
   ${sources}
 
+)
+
+
+target_include_directories(
+  ${CMAKE_PROJECT_NAME}
+  PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/exercises
 )
 
 include_directories(
@@ -66,6 +82,8 @@ set(test_sources ${test_sources}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Matrix_tests.cpp
   
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Parse/PPM_test.cpp
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Ray_test.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/World/Canvas_tests.cpp
 )

@@ -6,20 +6,21 @@
 #include <array>
 #include <vector>
 
-class Shape{};
+class Shape;
 
 struct Intersection{
   float t;
-  Shape s;
-  
+  Shape* s;
+};
+
+struct IntersectionUV: public Intersection{
   float u;
   float v;
-
 };
 
 struct computations {
   float t;
-  Shape object;
+  Shape* object;
   Tuple point;
   Tuple eyeV;
   Tuple normalV;
@@ -38,9 +39,17 @@ public:
   Intersections(std::vector<Intersection> inters):inters{std::move(inters)}{};
 
   void add(Intersection value);
+  Intersection get(size_t i) const;
+  size_t size() const;
 
   Intersection getLowestPositive();
   Intersection* hit();
+
+  bool equal(Intersections const& other) const;
+
+  bool operator==(Intersections const& other) const {
+    return equal(other);
+  }
 
   
 

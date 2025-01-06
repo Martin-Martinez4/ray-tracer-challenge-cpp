@@ -3,6 +3,9 @@
 #include "Matrix.h"
 #include "Tuple.h"
 #include <array>
+#include <memory>
+#include <cmath>
+#include <iostream>
 
 
 Tuple Ray::position(float f) const{
@@ -11,19 +14,19 @@ Tuple Ray::position(float f) const{
 
 Ray Ray::translate(float x, float y, float z) const{
   Tuple newPoint =tupleMultiply(Matrix::identityMatrix(4), origin);
-  return Ray{{newPoint.x, newPoint.y, newPoint.z}, {direction.x, direction.y, direction.z}}; 
+  return Ray{newPoint, direction}; 
 }
 
 Ray Ray::scale(float x, float y, float z) const{
   Tuple newOrigin = tupleMultiply(Matrix::identityMatrix(4), origin);
   Tuple newDirection = tupleMultiply(Matrix::identityMatrix(4), origin);
-  return Ray{{newOrigin.x, newOrigin.y, newOrigin.z}, {newDirection.x, newDirection.y, newDirection.z}};
+  return Ray{newOrigin, newDirection};
 }
 
 Ray Ray::transform(Matrix matrix) const{
   Tuple newOrigin = tupleMultiply(matrix, origin);
   Tuple newDirection = tupleMultiply(matrix, direction);
-  return Ray{{newOrigin.x, newOrigin.y, newOrigin.z}, {newDirection.x, newDirection.y, newDirection.z}}; 
+  return Ray{newOrigin, newDirection}; 
 }
 
 bool Ray::equal(Ray const& other) const{
@@ -33,20 +36,32 @@ bool Ray::equal(Ray const& other) const{
   );
 }
 
-Intersections* raySphereIntersect(Ray const& ray, Sphere const& sphere){
-  Tuple sphereToRay = ray.origin.subtractTuple(point(0, 0, 0));
+std::shared_ptr<Intersections> raySphereIntersect(Ray const& ray, Sphere* sphere){
+  Ray r = ray.transform(sphere->getInverseTransform());
+  
+  Tuple sphereToRay = r.origin.subtractTuple(point(0, 0, 0));
 
-  float a = ray.direction.dot(ray.direction);
-  float b = 2 * ray.direction.dot(sphereToRay);
+  float a = r.direction.dot(r.direction);
+  float b = 2 * r.direction.dot(sphereToRay);
   float c = sphereToRay.dot(sphereToRay) - 1;
 
   float discriminant = (b * b) - (4 * a * c);
     
-  Intersections* intersections = new Intersections;
+  auto intersections = std::shared_ptr<Intersections> (new Intersections());
 
-  if(discriminant < 0){
-    return intersections;
+  if(discriminant >= 0){
+    float d1 = (-b - sqrtf(discriminant)) / (2 * a);
+		float d2 = (-b + sqrtf(discriminant)) / (2 * a);
+
+    if(floatsEqual(d1, d2)){
+      (*intersections).add(Intersection{d1, sphere});
+    }else{
+
+      (*intersections).add(Intersection{d1, sphere});
+      (*intersections).add(Intersection{d2, sphere});
+    }
   }
+  return intersections;
 }
 
 

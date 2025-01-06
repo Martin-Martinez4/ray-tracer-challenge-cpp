@@ -2,18 +2,14 @@
 #define SHAPES_SPHERE_H_
 
 #include "Matrix.h"
-class Sphere{
-  Sphere():transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)){};
+#include "Shape.h"
+
+class Sphere: public Shape{
 public:
-
-  Matrix getTransforms();
-  void setTransform(Matrix const& transform);
-
-  Matrix getInverseTransform();
-
+  Sphere(): Shape(){};
+  
 private:
-  Matrix transform;
-  Matrix inverseTransform;
+
 };
 
 

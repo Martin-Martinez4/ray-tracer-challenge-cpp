@@ -28,7 +28,7 @@ Tuple normalize(Tuple& tuple){
 }
 
 float Tuple::dot(Tuple const& tuple) const {
-  return x*tuple.x + y*tuple.y + z*tuple.z + w+tuple.w;
+  return x*tuple.x + y*tuple.y + z*tuple.z + w*tuple.w;
 }
 Tuple Tuple::cross(Tuple const& tuple) const{
   return vector(

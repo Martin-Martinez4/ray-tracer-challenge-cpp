@@ -3,6 +3,11 @@
 #include "iostream"
 #include "Matrix.h"
 #include <array>
+#include "exercises.h"
+#include "PPM.h"
+#include <iostream>
+#include <fstream>
+#include <string>
 
 int main(){
 
@@ -14,6 +19,10 @@ int main(){
 
   std::cout << "scalared :" << "\n";
   std::cout << tupleMultiply(mat, Tuple{1,2,3,1}) << "\n";
+
+  std::ofstream out("Ex001.ppm");
+  out << ppm(Ex001());
+  out.close();
 
 
   
