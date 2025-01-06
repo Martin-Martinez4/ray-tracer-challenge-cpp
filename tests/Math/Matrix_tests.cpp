@@ -290,7 +290,7 @@ TEST(MatrixTest, Matrix3x3Determinate){
   
   for(size_t i = 0; i < numTests; i++){
     test test = tests[i];
-    EXPECT_TRUE(FloatsEqual(test.m1.determinate(), test.want)); 
+    EXPECT_TRUE(floatsEqual(test.m1.determinate(), test.want)); 
   }
 }
 

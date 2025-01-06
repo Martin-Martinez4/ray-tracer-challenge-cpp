@@ -48,10 +48,10 @@ struct Tuple {
 
   bool operator==(Tuple const& other) const{
     return (
-      FloatsEqual(x, other.x) && 
-      FloatsEqual(y, other.y) && 
-      FloatsEqual(z, other.z) && 
-      FloatsEqual(w, other.w)
+      floatsEqual(x, other.x) && 
+      floatsEqual(y, other.y) && 
+      floatsEqual(z, other.z) && 
+      floatsEqual(w, other.w)
     );
   }
 

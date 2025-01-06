@@ -15,22 +15,36 @@ enable_testing()
 
 set(sources ${sources}
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Tuple.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Floats.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Math/Matrix.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Color.cpp
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/Math/Tuple.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Math/Floats.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Math/Matrix.cpp
+  
+  ${CMAKE_CURRENT_SOURCE_DIR}/Parse/PPM.cpp
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Intersection.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Ray.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Sphere.cpp
+  
+  ${CMAKE_CURRENT_SOURCE_DIR}/World/Canvas.cpp
 )
 
 add_executable(
-    ${CMAKE_PROJECT_NAME}
-    main.cpp
-    ${sources}
+  ${CMAKE_PROJECT_NAME}
+  main.cpp
+  ${sources}
 
 )
 
 include_directories(
   ${CMAKE_PROJECT_NAME}
   PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/Materials
   ${CMAKE_CURRENT_SOURCE_DIR}/Math
+  ${CMAKE_CURRENT_SOURCE_DIR}/Parse
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes
+  ${CMAKE_CURRENT_SOURCE_DIR}/World
 )
 
 
@@ -50,6 +64,10 @@ set(test_sources ${test_sources}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Tuple_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Floats_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Matrix_tests.cpp
+  
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/Parse/PPM_test.cpp
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/World/Canvas_tests.cpp
 )
 
 add_executable(

@@ -57,16 +57,13 @@ public:
 
     for(size_t x = 0; x < size; ++x){
         for(size_t y = 0; y < size; ++y){
-            if(!FloatsEqual(get(x, y), otherMatrix.get(x, y))){
+            if(!floatsEqual(get(x, y), otherMatrix.get(x, y))){
                 return false;
             }
         }   
     }
 
     return true;
-
-    
-
   }
 
   friend std::ostream& operator<<(std::ostream &os, const Matrix& m);

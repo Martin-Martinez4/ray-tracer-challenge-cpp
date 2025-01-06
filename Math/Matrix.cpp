@@ -32,7 +32,7 @@ bool Matrix::equal(Matrix const& otherMatrix) const{
 
     for(size_t x = 0; x < size; ++x){
         for(size_t y = 0; y < size; ++y){
-            if(!FloatsEqual(get(x, y), otherMatrix.get(x, y))){
+            if(!floatsEqual(get(x, y), otherMatrix.get(x, y))){
                 return false;
             }
         }   

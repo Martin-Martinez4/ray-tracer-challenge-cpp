@@ -22,10 +22,10 @@ TEST(FloatsTest, FloatsEqual){
   
   for(size_t i = 0; i < numTests; i++){
     if(tests[i].want){
-      EXPECT_TRUE(FloatsEqual(tests[i].f1, tests[i].f2)); 
+      EXPECT_TRUE(floatsEqual(tests[i].f1, tests[i].f2)); 
 
     }else{
-      EXPECT_FALSE(FloatsEqual(tests[i].f1, tests[i].f2));
+      EXPECT_FALSE(floatsEqual(tests[i].f1, tests[i].f2));
     }
   }
 }

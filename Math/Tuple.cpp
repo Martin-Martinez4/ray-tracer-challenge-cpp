@@ -70,10 +70,10 @@ float Tuple::magnitude(){
 
 bool Tuple::equal(Tuple const& tuple){
   return (
-    FloatsEqual(x, tuple.x) && 
-    FloatsEqual(y, tuple.y) && 
-    FloatsEqual(z, tuple.z) && 
-    FloatsEqual(w, tuple.w)
+    floatsEqual(x, tuple.x) && 
+    floatsEqual(y, tuple.y) && 
+    floatsEqual(z, tuple.z) && 
+    floatsEqual(w, tuple.w)
   );
 }
 
