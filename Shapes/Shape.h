@@ -20,6 +20,8 @@ public:
   void setColor(float r, float g, float b);
   Color getColor() const;
 
+  virtual Tuple normalAt(Tuple worldPoint);
+
 
 private:
   Matrix transform;

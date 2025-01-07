@@ -3,10 +3,13 @@
 
 #include "Matrix.h"
 #include "Shape.h"
+#include "Tuple.h"
 
 class Sphere: public Shape{
 public:
   Sphere(): Shape(){};
+
+  Tuple normalAt(Tuple worldPoint) override;
   
 private:
 
