@@ -8,34 +8,40 @@
 #include <iostream>
 
 Canvas Ex001(){
-  size_t canvasPixels = 100;
+  float canvasPixels = 300;
   Tuple rayOrigin = point(0,0,-5);
-  int wallSize = 7;
-  int wallZ = 10;
-  int half = wallSize/2;
-  int pixelSize = wallSize / canvasPixels;
+  float wallSize = 7;
+  float wallZ = 10;
+  float half = wallSize/2;
+  float pixelSize = wallSize / canvasPixels;
 
   Canvas canvas = Canvas(canvasPixels, canvasPixels);
-  Color color = Color(125, 207, 180);
+  Color color2 = Color(125, 207, 180);
+  Color color1 = Color(255, 255, 255);
   Sphere shape = Sphere();
 
   for(size_t  y = 0; y < canvasPixels; ++y){
 
-    int worldY = half - pixelSize * y;
+    float worldY = half - pixelSize * float(y);
 
     for(size_t  x = 0; x < canvasPixels; ++x){
 
-      int worldX = -half + pixelSize * x;
+      float worldX = -half + pixelSize * float(x);
 
       Tuple position = point(worldX, worldY, wallZ);
-      Tuple normalized = normalize(position.subtractTuple(rayOrigin));
+      Tuple temp = position.subtractTuple(rayOrigin);
+      Tuple normalized = normalize(temp);
 
       Ray r = Ray{rayOrigin, normalized};
 
+
       std::shared_ptr<Intersections> xs = raySphereIntersect(r, &shape);
 
-      if((*xs).size() < 0){
-        canvas.setPixel(x, y, color);
+      if((*xs).size() > 0){
+        canvas.setPixel(x, y, color2);
+      }else{
+        canvas.setPixel(x, y, color1);
+
       }
     
     } 
