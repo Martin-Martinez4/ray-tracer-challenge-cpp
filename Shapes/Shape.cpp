@@ -7,8 +7,19 @@ Matrix Shape::getTransforms(){
 }
 void Shape::setTransform(Matrix const& transform){
   this->transform = transform.matrixMultiply(this->transform);
-  // this->inverseTransform = this->transform.inverse();
+  this->inverseTransform = this->transform.inverse();
 }
+void Shape::setTransforms(std::vector<Matrix> transforms){
+  Matrix transformation = identityMatrix4x4;
+
+  size_t size = transforms.size();
+  for(size_t t = 0; t < size; ++t){
+    transformation = transforms[t].matrixMultiply(transformation);
+  }
+
+  this->setTransform(transformation);
+};
+
 
 Matrix Shape::getInverseTransform(){
   return inverseTransform;

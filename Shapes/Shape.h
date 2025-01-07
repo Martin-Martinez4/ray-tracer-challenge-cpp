@@ -12,6 +12,7 @@ public:
 
   Matrix getTransforms();
   void setTransform(Matrix const& transform);
+  void setTransforms(std::vector<Matrix> transforms);
 
   Matrix getInverseTransform();
   

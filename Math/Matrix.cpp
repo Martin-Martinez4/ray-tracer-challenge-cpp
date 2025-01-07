@@ -4,7 +4,8 @@
 #include <stdexcept>
 #include <iostream>
 #include <ostream>
-#include<algorithm>
+#include <algorithm>
+#include <cmath>
 
 float Matrix::get(size_t x, size_t y) const{
     return matrix[y + x*size];
@@ -42,7 +43,7 @@ bool Matrix::equal(Matrix const& otherMatrix) const{
 }
 
 Matrix Matrix::matrixMultiply(Matrix const& otherMatrix) const{
-    // All Matrices are squared in this program
+    // All Matrixes are squared in this program
     if(size != otherMatrix.size){
         throw std::invalid_argument("matrices tried to multiply matrices of different sizes");
     }
@@ -171,6 +172,45 @@ Matrix Matrix::identityMatrix(size_t size){
     }
 
     return mat;
+}
+
+Matrix Matrix::translation(float x, float y,float z){
+    return Matrix{{1,0,0,x, 0,1,0,y, 0,0,1,z, 0,0,0,1}};
+}
+Matrix Matrix::translationInverse(float x, float y,float z){
+    x*= -1.0f;
+    y*= -1.0f;
+    z*= -1.0f;
+    return Matrix{{1,0,0,x, 0,1,0,y, 0,0,1,z, 0,0,0,1}};
+
+}
+Matrix Matrix::scale(float x, float y,float z){
+    return Matrix{{x,0,0,0, 0,y,0,0, 0,0,z,0, 0,0,0,1}};
+}
+Matrix Matrix::scaleInverse(float x, float y,float z){
+    
+    return Matrix{{1/x,0,0,0, 0,1/y,0,0, 0,0,1/z,0, 0,0,0,1}};
+}
+Matrix Matrix::reflectX(){
+    return Matrix{{-1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1}};
+}
+Matrix Matrix::reflectY(){
+    return Matrix{{1,0,0,0, 0,-1,0,0, 0,0,1,0, 0,0,0,1}};
+}
+Matrix Matrix::refelctZ(){
+     return Matrix{{1,0,0,0, 0,-1,0,0, 0,0,1,0, 0,0,0,1}};
+}
+Matrix Matrix::rotationAlongX(float radians){
+    return Matrix{{1,0,0,0, 0,cosf(radians),-sinf(radians),0, 0,sinf(radians),cosf(radians),0, 0,0,0,1}};
+}
+Matrix Matrix::rotationAlongY(float radians){
+    return Matrix{{cosf(radians),0,sinf(radians),0, 0,1,0,0, -sinf(radians),0,cosf(radians),0, 0,0,0,1}};
+}
+Matrix Matrix::rotationAlongZ(float radians){
+    return Matrix{{cos(radians),-sin(radians),0,0, sin(radians),cos(radians),0,0, 0,0,1,0, 0,0,0,1}};
+}
+Matrix Matrix::shear(float xy, float xz, float yx, float yz, float zx, float zy){
+    return Matrix{{1,xy,xz,0, yx,1,yz,0, zx,zy,1,0, 0,0,0,1}};
 }
 
 std::ostream& operator<<(std::ostream &os, const Matrix& m){

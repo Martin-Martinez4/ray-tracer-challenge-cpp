@@ -39,7 +39,20 @@ public:
   Matrix inverse() const;
 
   bool isInvertible() const;
+
   static Matrix identityMatrix(size_t size);
+  static Matrix translation(float x, float y,float z);
+  static Matrix translationInverse(float x, float y,float z);
+  static Matrix scale(float x, float y,float z);
+  static Matrix scaleInverse(float x, float y,float z);
+  static Matrix reflectX();
+  static Matrix reflectY();
+  static Matrix refelctZ();
+  static Matrix rotationAlongX(float radians);
+  static Matrix rotationAlongY(float radians);
+  static Matrix rotationAlongZ(float radians);
+  static Matrix shear(float xy, float xz, float yx, float yz, float zx, float zy);
+
 
   Matrix& operator=(const Matrix & other){
     if(this != &other){
@@ -75,9 +88,7 @@ private:
 };
 
 Tuple tupleMultiply(Matrix const& matrix, Tuple const& tuple);
-
-
-
+const Matrix identityMatrix4x4 = Matrix({1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1});
 
 #endif
 

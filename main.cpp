@@ -19,6 +19,7 @@ int main(){
 
   std::cout << "scalared :" << "\n";
   std::cout << tupleMultiply(mat, Tuple{1,2,3,1}) << "\n";
+  std::cout << identityMatrix4x4 << "\n";
 
   std::ofstream out("Ex001.ppm");
   out << ppm(Ex001());
