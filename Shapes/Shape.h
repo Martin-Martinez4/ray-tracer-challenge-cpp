@@ -5,10 +5,13 @@
 #include "Color.h"
 
 struct Ray;
+struct Material;
 
 class Shape {
 public:
-  Shape():transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)),color{Color{0,0,0}}{};
+  Shape():transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)){
+    setColor(Color(0,0,0));
+  };
 
   Matrix getTransforms();
   void setTransform(Matrix const& transform);
@@ -20,14 +23,14 @@ public:
   void setColor(float r, float g, float b);
   Color getColor() const;
 
-  virtual Tuple normalAt(Tuple worldPoint);
+  virtual Tuple normalAt(Tuple worldPoint) = 0;
 
 
 private:
   Matrix transform;
   Matrix inverseTransform;
   Ray* savedRay;
-  Color color;
+  Material* material;
 };
 
 #endif

@@ -1,3 +1,4 @@
+#include "Material.h"
 #include "Shape.h"
 #include "Matrix.h"
 #include "Color.h"
@@ -26,11 +27,11 @@ Matrix Shape::getInverseTransform(){
 }
 
 void Shape::setColor(Color color){
-  this->color = color;
+  this->material->color = color;
 }
 void Shape::setColor(float r, float g, float b){
-  this->color = Color{r,g,b,};
+  this->material->color = Color{r,g,b,};
 }
 Color Shape::getColor() const{
-  return color;
+  return this->material->color;
 }

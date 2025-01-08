@@ -1,4 +1,5 @@
 #include "Sphere.h"
+#include "Shape.h"
 #include "Canvas.h"
 #include "Color.h"
 #include "Tuple.h"

@@ -79,7 +79,7 @@ bool Tuple::equal(Tuple const& tuple){
 
 Tuple Tuple::reflect(Tuple const& normal) const {
   return this->subtractTuple(
-    normal.multiplyScalar(normal.dot(*this) * 2)
+    normal.multiplyScalar(this->dot(normal) * 2)
   );
 }
 

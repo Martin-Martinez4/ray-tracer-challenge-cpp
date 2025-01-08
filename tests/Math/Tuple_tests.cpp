@@ -232,3 +232,24 @@ TEST(TupleTest, CrossProductTuple){
     EXPECT_EQ(test.t1.cross(test.t2), test.want); 
   }
 }
+
+TEST(TupleTest, ReflectTuple){
+
+  struct test {
+    Tuple vec;
+    Tuple normal;
+    Tuple want;
+  };
+  
+  const size_t numTests = 2;
+
+  test tests[numTests] = {
+    {vector(1, -1, 0), vector(0, 1, 0), vector(1, 1, 0)},
+    {vector(0, -1, 0), vector(sqrtf(2)/2, sqrtf(2)/2, 0), vector(1, 0, 0)}
+  };
+  
+  for(size_t i = 0; i < numTests; i++){
+    test test = tests[i];
+    EXPECT_EQ(test.vec.reflect(test.normal), test.want); 
+  }
+}

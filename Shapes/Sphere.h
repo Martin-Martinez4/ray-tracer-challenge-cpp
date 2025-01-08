@@ -1,7 +1,6 @@
 #ifndef SHAPES_SPHERE_H_
 #define SHAPES_SPHERE_H_
 
-#include "Matrix.h"
 #include "Shape.h"
 #include "Tuple.h"
 
