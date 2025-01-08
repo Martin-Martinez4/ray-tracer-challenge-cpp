@@ -29,8 +29,7 @@ set(sources ${sources}
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Ray.cpp
   
   ${CMAKE_CURRENT_SOURCE_DIR}/World/Canvas.cpp
-
-  # ${CMAKE_CURRENT_SOURCE_DIR}/exercises/red_circle.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/World/Light.cpp
 )
 
 
@@ -46,7 +45,7 @@ add_executable(
 
 )
 
-
+# include exercises only in the main program and not in tests
 target_include_directories(
   ${CMAKE_PROJECT_NAME}
   PUBLIC
@@ -85,6 +84,7 @@ set(test_sources ${test_sources}
 
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Ray_test.cpp
 
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/World/Light_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/World/Canvas_tests.cpp
 )
 
