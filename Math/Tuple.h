@@ -91,7 +91,7 @@ struct Tuple {
   friend std::ostream& operator<<(std::ostream &os, const Tuple& p);
 
 };
-
+ Tuple normalize(Tuple& tuple);
 
 #endif
 
