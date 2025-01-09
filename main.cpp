@@ -13,8 +13,8 @@
 int main(){
 
 
-  std::ofstream out("Ex001-2.ppm");
-  out << ppm(Ex001());
+  std::ofstream out("Ex002.ppm");
+  out << ppm(Ex002());
   out.close();
 
   

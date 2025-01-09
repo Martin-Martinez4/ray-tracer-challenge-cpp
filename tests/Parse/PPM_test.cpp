@@ -49,7 +49,7 @@ TEST(ParseTest, PPMBody){
     std::string want;
   };
   
-  const size_t numeTests = 5;
+  const size_t numeTests = 6;
 
   test tests[numeTests] = {
     {
@@ -68,8 +68,8 @@ TEST(ParseTest, PPMBody){
       5,
       3,
       std::vector<colorChange>{
-        {0, 0, Color(0, 255, 0)}, 
-        {1,3, Color(255, 0, 0)}
+        {0, 0, Color(0, 1, 0)}, 
+        {1,3, Color(1, 0, 0)}
       },
       "0 255 0 0 0 0 0 0 0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 255 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
 
@@ -78,8 +78,8 @@ TEST(ParseTest, PPMBody){
       5,
       3,
       std::vector<colorChange>{
-        {0, 0, Color(0, 255, 0)}, 
-        {2,4, Color(255, 0, 0)}
+        {0, 0, Color(0, 1, 0)}, 
+        {2,4, Color(1, 0, 0)}
       },
       "0 255 0 0 0 0 0 0 0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 0 0 0 255 0 0"
 
@@ -90,7 +90,16 @@ TEST(ParseTest, PPMBody){
       std::vector<colorChange>{
         {0, 0, Color(0, -0.5f, 0.5f)}, 
       },
-      "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+      "0 0 127 0 0 0 0 0 0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+
+    },
+    {
+      5,
+      3,
+      std::vector<colorChange>{
+        {0, 0, Color(-0.5, 5, -10)}, 
+      },
+      "0 255 0 0 0 0 0 0 0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
 
     },
 
@@ -110,7 +119,7 @@ TEST(ParseTest, PPMBody){
     std::stringstream ss;
     ppmBody(ss, c);
 
-    EXPECT_EQ(ss.str(), test.want);
+    EXPECT_EQ(ss.str(), test.want) << "Test: " << i << "\n";
 
   }
 }

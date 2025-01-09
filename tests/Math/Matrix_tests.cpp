@@ -265,8 +265,7 @@ TEST(MatrixTest, Matrix3x3Determinate){
     float want;
   };
   
-  const size_t numTests = 4;
-
+  const size_t numTests = 5;
   test tests[numTests] = {
     {
       Matrix{std::array<float, 9>{10,1,20, 2,0.10f,10, 0.20f,20,8}},
@@ -283,7 +282,11 @@ TEST(MatrixTest, Matrix3x3Determinate){
     {
       Matrix{std::array<float, 9>{1,2,6, -5,8,-4, 2,6,4}},
       -196 
-    }
+    },
+    {
+      Matrix{std::array<float, 9>{1, 1, 2, 2, 1, 1, 2, 2, 4}},
+      0
+    },
     
     
   };

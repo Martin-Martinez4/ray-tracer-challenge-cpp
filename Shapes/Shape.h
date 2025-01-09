@@ -23,6 +23,8 @@ public:
   void setColor(float r, float g, float b);
   Color getColor() const;
 
+  Material getMaterial();
+
   virtual Tuple normalAt(Tuple worldPoint) = 0;
 
 

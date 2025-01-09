@@ -37,3 +37,7 @@ void Shape::setColor(float r, float g, float b){
 Color Shape::getColor() const{
   return this->material.color;
 }
+
+Material Shape::getMaterial(){
+  return material;
+}
