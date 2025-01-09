@@ -15,7 +15,6 @@ TEST(LightTest, LightingFunction){
     Material m;
     Tuple eyeVec;
     Tuple normalVec;
-    Tuple point;
     Light light;
     Color want;
 
@@ -24,22 +23,27 @@ TEST(LightTest, LightingFunction){
   Material mat = Material();
   Tuple p = point(0,0,0);
   
-  const size_t numTests = 4;
+  const size_t numTests = 5;
 
   test tests[numTests] = {
     {
       mat,
       vector(0,0,-1),
       vector(0,0,-1),
-      p,
       Light(std::array<float,3>{0,0,-10}, std::array<float,3>{1,1,1}),
       Color(1.9, 1.9, 1.9)
     },
     {
       mat,
+      vector(0, sqrtf(2)/2, -sqrtf(2)/2),
+      vector(0,0,-1),
+      Light(std::array<float, 3>{0, 0, -10}, std::array<float, 3>{1,1,1}),
+      Color(1.0, 1.0, 1.0),
+    },
+    {
+      mat,
       vector(0,0,-1),
       vector(0,0,-1),
-      p,
       Light(std::array<float, 3>{0,10,-10}, std::array<float,3>{1,1,1}),
       Color(0.7364, 0.7364, 0.7364),
     },
@@ -47,24 +51,22 @@ TEST(LightTest, LightingFunction){
       mat,
       vector(0, -sqrtf(2)/2, -sqrtf(2)/2),
       vector(0,0,-1),
-      p,
       Light(std::array<float, 3>{0, 10, -10}, std::array<float, 3>{1,1,1}),
       Color(1.6364, 1.6364, 1.6364),
     },
     {
       mat,
-      vector(0, sqrtf(2)/2, -sqrtf(2)/2),
+      vector(0, 0, -1),
       vector(0,0,-1),
-      p,
-      Light(std::array<float, 3>{0, 0, -10}, std::array<float, 3>{1,1,1}),
-      Color(1.0, 1.0, 1.0),
+      Light(std::array<float, 3>{0, 0, 10}, std::array<float, 3>{1,1,1}),
+      Color(0.1f, 0.1f, 0.1f),
     },
     
   };
 
   for(size_t i = 0; i < numTests; ++i){
     test t = tests[i];
-    EXPECT_EQ(lighting(t.m, t.light, t.point, t.eyeVec, t.normalVec, false), t.want);
+    EXPECT_EQ(lighting(t.m, t.light, p, t.eyeVec, t.normalVec, false), t.want);
   }
 
 

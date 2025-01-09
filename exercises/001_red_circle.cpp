@@ -8,8 +8,11 @@
 #include <cstddef>
 #include <memory>
 #include <iostream>
+#include "001_red_circle.h"
 
 Canvas Ex001(){
+  std::clog << "Start \n";
+
   float canvasPixels = 400;
   Tuple rayOrigin = point(0,0,-5);
   float wallSize = 7;
@@ -17,15 +20,14 @@ Canvas Ex001(){
   float half = wallSize/2;
   float pixelSize = wallSize / canvasPixels;
 
-  Color bgColor = Color(249, 224, 217);
-  Color color1 = Color(255, 255, 255);
-  Color color2 = Color(125, 207, 180);
-  Color color3 = Color(240, 101, 67);
-  Color color4 = Color(120, 41, 15);
+  Color bgColor = Color(0.9765, 0.878, 0.8509);
+  Color color1 = Color(1.0f, 1.0f, 1.0f);
+  Color color2 = Color(0.49f, 0.8118f, 0.7059f);
+  Color color3 = Color(0.9412f, 0.3961f, 0.2627f);
+  Color color4 = Color(0.4706f, 0.1608f, 0.0588f);
 
   Canvas canvas = Canvas(canvasPixels, canvasPixels, bgColor );
   
-
   Sphere blue = Sphere();
   blue.setColor(color2);
   blue.setTransform(Matrix::scale(1.1, 1.1, 1.1));
@@ -40,6 +42,7 @@ Canvas Ex001(){
   Sphere red = Sphere();
   red.setColor(color4);
   red.setTransform(Matrix::scale(.5,.5,.5));
+  
   
   std::array<Sphere*, 4> shapes = {&blue, &orange, &white, &red};
 
@@ -69,6 +72,7 @@ Canvas Ex001(){
     
     } 
   }
+  std::clog << "Ran \n";
 
   return canvas;
 }

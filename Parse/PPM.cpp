@@ -29,7 +29,7 @@ std::stringstream& ppmHeader(std::stringstream& ss,  size_t width, size_t height
         }
         
         // PPM only uses ints, values have to be clamped
-        ss << clampToInt(currentColor.r, 0, 255) << " " << clampToInt(currentColor.g, 0, 255) << " " << clampToInt(currentColor.b, 0, 255);
+        ss << clampToInt(currentColor.r*255, 0, 255) << " " << clampToInt(currentColor.g*255, 0, 255) << " " << clampToInt(currentColor.b*255, 0, 255);
 
         if(w != width-1 || h != height-1){
           ss << " ";

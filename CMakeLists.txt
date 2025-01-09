@@ -16,6 +16,7 @@ enable_testing()
 set(sources ${sources}
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Color.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Material.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Math/Tuple.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Math/Floats.cpp
@@ -33,15 +34,17 @@ set(sources ${sources}
 )
 
 
-set(sources ${sources}
+set(exsources
 
-  ${CMAKE_CURRENT_SOURCE_DIR}/exercises/red_circle.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/exercises/001_red_circle.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/exercises/002_purple_ball.cpp
 )
 
 add_executable(
   ${CMAKE_PROJECT_NAME}
   main.cpp
   ${sources}
+  ${exsources}
 
 )
 

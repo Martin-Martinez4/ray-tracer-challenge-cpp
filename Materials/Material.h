@@ -11,6 +11,7 @@ struct Material {
   float reflective = 0;
   float transparency = 0;
   float refractiveIndex = 1;
+
 };
 
 

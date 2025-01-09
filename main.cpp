@@ -8,12 +8,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iostream>
 
 int main(){
 
-  std::ofstream out("Ex001.ppm");
+
+  std::ofstream out("Ex001-2.ppm");
   out << ppm(Ex001());
   out.close();
+
   
   return 0;
 }
