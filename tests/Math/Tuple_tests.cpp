@@ -250,6 +250,6 @@ TEST(TupleTest, ReflectTuple){
   
   for(size_t i = 0; i < numTests; i++){
     test test = tests[i];
-    EXPECT_EQ(test.vec.reflect(test.normal), test.want); 
+    EXPECT_EQ(test.vec.reflectBy(test.normal), test.want); 
   }
 }

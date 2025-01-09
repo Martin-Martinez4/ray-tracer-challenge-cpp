@@ -1,6 +1,7 @@
 #include "Tuple.h"
 #include "Floats.h"
 #include <cmath>
+#include <iostream>
 
 Tuple point(float x, float y, float z){
   return Tuple(x, y, z, 1);
@@ -77,10 +78,16 @@ bool Tuple::equal(Tuple const& tuple){
   );
 }
 
-Tuple Tuple::reflect(Tuple const& normal) const {
-  return this->subtractTuple(
-    normal.multiplyScalar(this->dot(normal) * 2)
-  );
+Tuple Tuple::reflectBy(Tuple const& normalVector) const{
+
+  // return this->subtractTuple(
+  //   normalVector.multiplyScalar(this->dot(normalVector) * 2)
+  // );
+
+  Tuple smulti = normalVector.multiplyScalar(2);
+  float d = dot(normalVector);
+
+  return subtractTuple(smulti.multiplyScalar(d));
 }
 
 std::ostream& operator<<(std::ostream &os, const Tuple& tuple){

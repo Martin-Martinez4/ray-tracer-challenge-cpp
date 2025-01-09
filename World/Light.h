@@ -9,8 +9,8 @@ struct Material;
 
 struct Light {
   Light():intensity{Color(255, 255, 255)}, position{point(0,0,0)}{};
-  Light(Color color, Tuple position):intensity{color}, position{position}{};
-  Light(std::array<float, 3> rgb, std::array<float, 3> p):intensity{Color(rgb[0], rgb[1], rgb[2])}, position{point(p[0], p[1], p[2])}{};
+  Light(Tuple position, Color color):intensity{color}, position{position}{};
+  Light(std::array<float, 3> p, std::array<float, 3> rgb):intensity{Color(rgb[0], rgb[1], rgb[2])}, position{point(p[0], p[1], p[2])}{};
 
   Color intensity;
   Tuple position;

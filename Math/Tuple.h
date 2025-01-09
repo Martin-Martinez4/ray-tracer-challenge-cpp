@@ -44,7 +44,7 @@ struct Tuple {
 
   bool equal(Tuple const& tuple);
 
-  Tuple reflect(Tuple const& normal) const; 
+  Tuple reflectBy(Tuple const& normalVector) const;
 
   bool operator==(Tuple const& other) const{
     return (
