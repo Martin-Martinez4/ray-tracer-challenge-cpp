@@ -4,11 +4,12 @@
 #include "Sphere.h"
 
 Tuple Sphere::normalAt(Tuple worldPoint) {
-  Matrix invTransform = getInverseTransform();
-  Tuple objectPoint = tupleMultiply(invTransform, worldPoint);
+  
+  Tuple objectPoint = tupleMultiply(getInverseTransform(), worldPoint);
   Tuple objectNormal = objectPoint.subtractTuple(point(0,0,0));
   Tuple worldNormal = tupleMultiply(getInverseTransform().transpose(), objectNormal);
-  worldNormal.z = 0;
+  worldNormal.w = 0;
+  // Tuple wp = worldPoint.subtractTuple(point(0,0,0));
   return normalize(worldNormal);
 }
 

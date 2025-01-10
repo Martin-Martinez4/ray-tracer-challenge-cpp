@@ -80,14 +80,14 @@ bool Tuple::equal(Tuple const& tuple){
 
 Tuple Tuple::reflectBy(Tuple const& normalVector) const{
 
-  // return this->subtractTuple(
-  //   normalVector.multiplyScalar(this->dot(normalVector) * 2)
-  // );
+   return this->subtractTuple(
+     normalVector.multiplyScalar(this->dot(normalVector) * 2)
+  );
 
-  Tuple smulti = normalVector.multiplyScalar(2);
-  float d = dot(normalVector);
-
-  return subtractTuple(smulti.multiplyScalar(d));
+  //Tuple smulti = normalVector.multiplyScalar(2);
+  //float d = dot(normalVector);
+//
+  //return subtractTuple(smulti.multiplyScalar(d));
 }
 
 std::ostream& operator<<(std::ostream &os, const Tuple& tuple){

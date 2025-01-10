@@ -22,12 +22,12 @@ std::clog << "Start \n";
 
   Color bgColor = Color(0.9765, 0.878, 0.8509);
   Color color1 = Color(1.0f, 1.0f, 1.0f);
-  Color color2 = Color(0.49f, 0.8118f, 0.7059f);
+  Color color2 = Color(0.314f, 0.188f, 0.278f);
 
-  Canvas canvas = Canvas(canvasPixels, canvasPixels, bgColor );
+  Canvas canvas = Canvas(canvasPixels, canvasPixels);
   
-  Sphere blue = Sphere();
-  blue.setColor(color2);
+  Sphere violet = Sphere();
+  violet.setColor(color2);
 
   for(size_t  y = 0; y < canvasPixels; ++y){
 
@@ -44,7 +44,7 @@ std::clog << "Start \n";
       Ray r = Ray{rayOrigin, normalized};
 
 
-        std::shared_ptr<Intersections> xs = raySphereIntersect(r, &blue);
+        std::shared_ptr<Intersections> xs = raySphereIntersect(r, &violet);
 
         if((*xs).size() > 0){ 
           Intersection* found = (*xs).hit();
