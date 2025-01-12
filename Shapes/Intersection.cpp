@@ -2,6 +2,7 @@
 #include "Intersection.h"
 #include "Ray.h"
 #include <cstddef>
+#include <memory>
 #include <vector>
 #include <iostream>
 #include <ostream>
@@ -72,6 +73,18 @@ Intersection* Intersections::hit(){
   }
 
   return nullptr;
+}
+
+void Intersections::rayShapeIntersect(Ray ray, std::shared_ptr<Shape> shape){
+  std::shared_ptr<Intersections> inters = shape->intersect(ray);
+
+  if(inters == nullptr){
+    return;
+  }
+
+  for(size_t i = 0; i < inters->size(); ++i){
+    add(inters->get(i));
+  }
 }
 
 bool Intersections::equal(Intersections const& other) const{

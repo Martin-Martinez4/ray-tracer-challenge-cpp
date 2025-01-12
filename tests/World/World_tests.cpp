@@ -75,6 +75,40 @@ TEST(TestWorld, IntersectWorld){
   }
 }
 
+TEST(TestWorld, ColorAt){
+   
+  struct test {
+    Ray ray;
+    World world;
+    Color want;
+  };
+
+  World theWorld = createDefaultWorld();
+  
+  const size_t numTests = 2;
+
+  test tests[numTests] = {
+    {
+      Ray{std::array<float, 3>{0,0,-5}, std::array<float, 3>{0,1,0}},
+      theWorld,
+      Color(0.0f, 0.0f, 0.0f)
+    },
+    {  
+      Ray{std::array<float, 3>{0,0,-5}, std::array<float, 3>{0,0,1}},
+      theWorld,
+      Color(0.38066f, 0.47583f, 0.2855f)
+    },
+    
+  };
+
+  for(size_t i = 0; i < numTests; ++i){
+    test t = tests[i];
+  
+    EXPECT_EQ(colorAt(t.ray, t.world, 1), t.want);
+  }
+  
+}
+
 
 TEST(TestWorld, ShadeHit){
   
@@ -123,4 +157,3 @@ TEST(TestWorld, ShadeHit){
   }
   
 }
-

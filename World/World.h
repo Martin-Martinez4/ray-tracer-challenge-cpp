@@ -20,6 +20,8 @@ std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world);
 
 Color shadeHit(World world, Computations comps);
 
+std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world);
 
+Color colorAt(Ray ray, World world, int reflectionsLeft);
 
 #endif // !WORLD_WORLD_H_

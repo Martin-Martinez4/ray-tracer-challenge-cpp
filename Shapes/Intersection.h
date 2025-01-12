@@ -3,6 +3,7 @@
 
 #include "Floats.h"
 #include "Tuple.h"
+#include <memory>
 #include <ostream>
 #include <vector>
 
@@ -62,6 +63,8 @@ public:
 
   Intersection getLowestPositive();
   Intersection* hit();
+
+  void rayShapeIntersect(Ray ray, std::shared_ptr<Shape> shape);
 
   bool equal(Intersections const& other) const;
 

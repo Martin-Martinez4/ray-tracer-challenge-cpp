@@ -5,6 +5,7 @@
 #include "Shape.h"
 #include "Sphere.h"
 #include <array>
+#include <cstddef>
 #include <memory>
 
 World createDefaultWorld(){
@@ -23,13 +24,32 @@ World createDefaultWorld(){
   return World(std::vector<std::shared_ptr<Shape>>{std::move(sphere1), std::move(sphere2)}, light);
 }
 
-std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world){
-  return nullptr;
-}
-
 Color shadeHit(World world, Computations comps){
   
   return lighting(comps.object->getMaterial(), world.light, comps.point, comps.eyeV, comps.normalV, false);
+}
+
+std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world){
+  std::shared_ptr<Intersections> inters(new Intersections());
+
+  for(size_t i = 0; i < world.shapes.size(); ++i){
+    inters->rayShapeIntersect(ray, world.shapes[i]);
+  }
+
+  return inters;
+}
+
+Color colorAt(Ray ray, World world, int reflectionsLeft){
+  std::shared_ptr<Intersections> inters = rayWorldIntersect(ray, world);
+  
+  Intersection* intersection = inters->hit();
+
+  if(intersection == nullptr){
+    return Color(0,0,0);
+  }else{
+    return shadeHit(world, Computations(ray, *intersection));
+  }
+
 }
 
 

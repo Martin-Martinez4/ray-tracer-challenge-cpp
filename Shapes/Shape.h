@@ -5,9 +5,11 @@
 #include "Matrix.h"
 #include "Color.h"
 #include <iostream>
+#include <memory>
 
 struct Ray;
 struct Material;
+struct Intersections;
 
 class Shape {
 public:
@@ -28,6 +30,7 @@ public:
   void setMaterial(Material m);
 
   virtual Tuple normalAt(Tuple worldPoint) = 0;
+  virtual std::shared_ptr<Intersections> intersect(Ray ray) = 0;
 
 
 private:
