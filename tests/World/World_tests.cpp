@@ -1,13 +1,18 @@
 
-#include "Material.h"
+
+#include "Intersection.h"
+#include "Ray.h"
+#include "Shape.h"
 #include "Tuple.h"
 #include "Light.h"
 #include "Color.h"
+#include "World.h"
 #include <cmath>
 #include <array>
 #include <gtest/gtest.h>
+#include <iostream>
 
-TEST(LightTest, LightingFunction){
+TEST(TestWorld, IntersectWorld){
   
   
  
@@ -69,3 +74,53 @@ TEST(LightTest, LightingFunction){
     EXPECT_EQ(lighting(t.m, t.light, p, t.eyeVec, t.normalVec, false), t.want);
   }
 }
+
+
+TEST(TestWorld, ShadeHit){
+  
+  
+ 
+  struct test {
+    Ray ray;
+    std::shared_ptr<Shape> shape;
+    World world;
+    Intersection intersection;
+    Color want;
+  };
+
+  World theWorld = createDefaultWorld();
+  
+  World theOtherWorld = createDefaultWorld();
+  Light otherLight = Light(std::array<float,3>{0,0.25f,0}, std::array<float,3>{1,1,1});
+  theOtherWorld.light = otherLight;
+
+  const size_t numTests = 2;
+
+  test tests[numTests] = {
+    {
+      Ray{std::array<float, 3>{0,0,-5}, std::array<float, 3>{0,0,1}},
+      theWorld.shapes[0],
+      theWorld,
+      Intersection{4, theWorld.shapes[0].get()},
+      Color(0.38066f, 0.47583f, 0.2855f)
+    },
+    {  
+      Ray{std::array<float, 3>{0,0,0}, std::array<float, 3>{0,0,1}},
+      theOtherWorld.shapes[1],
+      theOtherWorld,
+      Intersection{0.5f, theOtherWorld.shapes[1].get()},
+      Color(0.90498f, 0.90498f, 0.90498f)
+    },
+    
+  };
+
+  for(size_t i = 0; i < numTests; ++i){
+    test t = tests[i];
+
+    Computations c = Computations(t.ray, t.intersection);
+  
+    EXPECT_EQ(shadeHit(t.world, c), t.want);
+  }
+  
+}
+

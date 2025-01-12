@@ -7,6 +7,7 @@
 class Sphere: public Shape{
 public:
   Sphere(): Shape(){};
+  Sphere(Material mat): Shape(mat){};
 
   Tuple normalAt(Tuple worldPoint) override;
   

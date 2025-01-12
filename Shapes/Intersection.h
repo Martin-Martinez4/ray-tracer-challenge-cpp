@@ -1,12 +1,13 @@
 #ifndef SHAPES_INTERSECTION_H_
 #define SHAPES_INTERSECTION_H_
 
+#include "Floats.h"
 #include "Tuple.h"
-#include <algorithm>
-#include <array>
+#include <ostream>
 #include <vector>
 
 class Shape;
+struct Ray;
 
 struct Intersection{
   float t;
@@ -18,24 +19,41 @@ struct IntersectionUV: public Intersection{
   float v;
 };
 
-struct computations {
+struct Computations {
+  Computations(Ray ray, Intersection intersection);
+  Computations(float t, Shape* object, Tuple point, Tuple eyeV, Tuple normalV, bool inside): t{t}, object{object}, point{point}, eyeV{eyeV}, normalV(normalV), inside{inside}{};
+
   float t;
   Shape* object;
   Tuple point;
   Tuple eyeV;
   Tuple normalV;
-  Tuple overPoint;
-  Tuple underPoint;
-  Tuple reflectV;
+  //Tuple overPoint;
+  //Tuple underPoint;
+  //Tuple reflectV;
   bool inside;
-  float n1;
-  float n2;
+  //float n1;
+  //float n2;
+  
+  bool operator==(Computations const & other) const{
+    return (
+      floatsEqual(t, other.t) &&
+      object == other.object &&
+      point == other.point &&
+      eyeV == other.eyeV &&
+      normalV == other.normalV &&
+      inside == other.inside
+    );
+  }
+
+   
+  friend std::ostream& operator<<(std::ostream &os, const Computations& c);
 
 };
 
 class Intersections {
 public: 
-  Intersections():inters{std::vector<Intersection>()}{};
+  Intersections():inters{std::vector<Intersection>{}}{};
   Intersections(std::vector<Intersection> inters):inters{std::move(inters)}{};
 
   void add(Intersection value);
@@ -58,6 +76,7 @@ private:
 
 };
 
+Computations prepareComputations(Intersection intersection, Ray ray);
 
 
 #endif // !SHAPES_INTERSECTION_H_

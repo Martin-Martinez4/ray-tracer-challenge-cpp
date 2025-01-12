@@ -31,6 +31,7 @@ set(sources ${sources}
   
   ${CMAKE_CURRENT_SOURCE_DIR}/World/Canvas.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/World/Light.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/World/World.cpp
 )
 
 
@@ -85,9 +86,11 @@ set(test_sources ${test_sources}
   
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Parse/PPM_test.cpp
 
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Intersection_test.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Sphere_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Ray_test.cpp
 
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/World/World_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/World/Light_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/World/Canvas_tests.cpp
 )

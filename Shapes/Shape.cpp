@@ -3,7 +3,8 @@
 #include "Matrix.h"
 #include "Color.h"
 
- Shape::Shape():transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)), material{Material()}{};
+Shape::Shape():transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)), material{Material()}{};
+Shape::Shape(Material mat):transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)), material{mat}{};
 
 Matrix Shape::getTransforms(){
   return transform;
@@ -40,4 +41,8 @@ Color Shape::getColor() const{
 
 Material Shape::getMaterial(){
   return material;
+}
+
+void Shape::setMaterial(Material m){
+  material = m;
 }

@@ -1,11 +1,36 @@
 
 #include "Intersection.h"
-#include <algorithm>
+#include "Ray.h"
 #include <cstddef>
 #include <vector>
 #include <iostream>
+#include <ostream>
 
 class Shape;
+
+
+
+Computations::Computations(Ray ray, Intersection intersection){
+  t = intersection.t; 
+  object = intersection.s;
+  point = ray.position(intersection.t);
+  eyeV = ray.direction.negate();
+  Tuple temp = ray.position(intersection.t);
+  normalV = object->normalAt(temp);
+
+  if(normalV.dot(eyeV) < 0){
+    inside = true;
+    normalV = normalV.negate();
+  }else{
+    inside = false;
+  }
+}
+
+
+std::ostream& operator<<(std::ostream &os, const Computations& c){
+ return os << "t: " << c.t << " " << "object: " << c.object << " " << "point: " << c.point << " " << "eyeV: " << c.eyeV << " " << "normalV: " << c.normalV << " " << "inside: " << c.inside << " ";  
+}
+
 
 void Intersections::add(Intersection value){
  // loop through
@@ -64,5 +89,4 @@ bool Intersections::equal(Intersections const& other) const{
   return true;
 
 }
-
 

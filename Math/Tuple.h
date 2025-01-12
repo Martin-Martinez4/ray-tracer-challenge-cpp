@@ -16,7 +16,7 @@ bool isVector(Tuple const& tuple);
 Tuple normalize(Tuple& tuple);
 
 struct Tuple {
-
+  Tuple():Tuple::Tuple(0,0,0,0){};
   Tuple(float x, float y, float z):Tuple::Tuple(x, y, z, 0){};
   Tuple(float x, float y, float z, float w):x(x), y(y), z(z), w(w){}
 

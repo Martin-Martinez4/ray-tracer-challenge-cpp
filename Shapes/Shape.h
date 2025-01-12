@@ -12,6 +12,7 @@ struct Material;
 class Shape {
 public:
   Shape();
+  Shape(Material mat);
 
   Matrix getTransforms();
   void setTransform(Matrix const& transform);
@@ -24,6 +25,7 @@ public:
   Color getColor() const;
 
   Material getMaterial();
+  void setMaterial(Material m);
 
   virtual Tuple normalAt(Tuple worldPoint) = 0;
 
