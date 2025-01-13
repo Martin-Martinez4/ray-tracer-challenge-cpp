@@ -8,6 +8,36 @@
 #include <vector>
 #include "Constants.h"
 
+TEST(CameraTest, PixelSize){
+
+  
+
+  struct test {
+    Camera camera;
+    float want;
+  };
+  
+  const size_t numTests = 2;
+    test tests[numTests] = {
+    {
+      Camera{200, 125, M_PI_2},
+      0.01f
+    },
+    {
+      Camera{125, 200, M_PI_2},
+      0.01
+    },
+  
+
+  };
+     
+  for(size_t i = 0; i < numTests; i++){
+    test t = tests[i];
+
+    EXPECT_EQ(t.camera.pixelSize, t.want);
+  }
+}
+
 TEST(CameraTest, RayForPixel){
 
   enum transformName {
@@ -48,7 +78,7 @@ TEST(CameraTest, RayForPixel){
       Camera{201, 101, M_PI_2},
       100,
       50,
-      {{transformName::rotation_y, {M_PI_4}}, {transformName::translate, {0, -2, 5}}},
+      {{transformName::rotation_y, {M_PI_4_F}}, {transformName::translate, {0, -2, 5}}},
       Ray{std::array<float, 3>{0,2,-5}, std::array<float, 3>{sqrtf(2)/2, 0, -sqrtf(2)/2}}
     },
 

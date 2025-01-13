@@ -5,11 +5,11 @@
 
 
 Color Canvas::getPixel(size_t x, size_t y){
-  return canvas[x*height + y];
+  return canvas[x + y*height];
 }
 
 void Canvas::setPixel(size_t x, size_t y, Color color){
-  canvas[x*height + y] = color;
+  canvas[x + y*height] = color;
 }
 
 

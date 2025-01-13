@@ -10,8 +10,8 @@
 class Canvas {
 public:
   Canvas():Canvas(10, 10){};
-  Canvas(size_t width, size_t height):width{width},height{height},canvas{std::vector<Color>(width*height, Color())}{};
-  Canvas(size_t width, size_t height, Color color):width{width},height{height},canvas{std::vector<Color>(width*height, color)}{};
+  Canvas(size_t width, size_t height):height{height}, width{width},canvas{std::vector<Color>(width*height, Color())}{};
+  Canvas(size_t width, size_t height, Color color):height{height}, width{width},canvas{std::vector<Color>(width*height, color)}{};
 
   size_t width;
   size_t height;
