@@ -60,6 +60,5 @@ TEST(CanvasTest, CanvasGetSetPixel){
       EXPECT_EQ(cc.color, c.getPixel(cc.x, cc.y));
     }
     
-
   }
 }

@@ -1,5 +1,7 @@
 
 
+#include "Camera.h"
+#include "Canvas.h"
 #include "Intersection.h"
 #include "Ray.h"
 #include "Shape.h"
@@ -110,9 +112,18 @@ TEST(TestWorld, ColorAt){
 }
 
 
-TEST(TestWorld, ShadeHit){
+TEST(TestWorld, Render){ 
+  
+  Camera c = Camera{11, 11, M_PI_2};
+  c.setTransform(Matrix::viewTransform(point(0,0,-5), point(0,0,0), vector(0, 1, 0)));
+  Canvas canvas = render(c, createDefaultWorld());
+
+  EXPECT_EQ(canvas.getPixel(5, 5), Color(0.38066f, 0.47583f, 0.2855f));
   
   
+}
+
+TEST(TestWorld, ShadeHit){ 
  
   struct test {
     Ray ray;

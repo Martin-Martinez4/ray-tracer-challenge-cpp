@@ -4,6 +4,8 @@
 #include "Intersection.h"
 #include "Shape.h"
 #include "Light.h"
+#include "Canvas.h"
+#include "Camera.h"
 #include <memory>
 #include <vector>
 
@@ -20,8 +22,10 @@ std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world);
 
 Color shadeHit(World world, Computations comps);
 
-std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world);
+std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world); 
 
 Color colorAt(Ray ray, World world, int reflectionsLeft);
+
+Canvas render(Camera camera, World world);
 
 #endif // !WORLD_WORLD_H_

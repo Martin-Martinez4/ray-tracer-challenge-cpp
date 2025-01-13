@@ -6,7 +6,7 @@
 Shape::Shape():transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)), material{Material()}{};
 Shape::Shape(Material mat):transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)), material{mat}{};
 
-Matrix Shape::getTransforms(){
+Matrix Shape::getTransform(){
   return transform;
 }
 void Shape::setTransform(Matrix const& transform){

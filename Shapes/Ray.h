@@ -21,6 +21,15 @@ struct Ray{
   Ray scale(float x, float y, float z) const;
   Ray transform(Matrix matrix) const;
   bool equal(Ray const& other) const;
+
+  bool operator==(Ray const& other) const{
+    return (
+      origin == other.origin &&
+      direction == other.direction
+    );
+  }
+
+  friend std::ostream& operator<<(std::ostream &os, const Ray& r);
 };
 
 std::shared_ptr<Intersections> raySphereIntersect(Ray const& ray, Sphere* sphere);

@@ -1,5 +1,6 @@
 #include "Matrix.h"
 #include "Floats.h"
+#include "Tuple.h"
 #include <array>
 #include <cmath>
 #include <cstddef>
@@ -512,5 +513,46 @@ TEST(MatrixTest, InverseMatrix){
 }
 
 
+TEST(MatrixTest, ViewTransform){
+
+  Matrix id4 = Matrix::identityMatrix(4);
+
+  struct test {
+    Tuple from;
+    Tuple to;
+    Tuple up;
+    Matrix want;
+  };
+  
+  const size_t numTests = 3;
+
+  test tests[numTests] = {
+    {
+      point(0, 0, 0),
+      point(0, 0, 1),
+      vector(0, 1, 0),
+      id4.matrixMultiply(Matrix::scale(-1,1,-1))
+    },
+    {
+      point(0, 0, 8),
+      point(0, 0, 0),
+      vector(0, 1, 0),
+      id4.matrixMultiply(Matrix::translate(0, 0, -8))
+    },
+    {
+      point(1, 3, 2),
+      point(4, -2, 8),
+      vector(1, 1, 0),
+      Matrix(std::array<float, 16>{-0.50709, 0.50709, 0.67612, -2.36643, 0.76772, 0.60609, 0.12122, -2.82843, -.35857, .59761, -.71714, 0, 0, 0, 0, 1})
+    },
+   
+    
+  };
+  
+  for(size_t i = 0; i < numTests; i++){
+    test t = tests[i];
+    EXPECT_EQ(Matrix::viewTransform(t.from, t.to, t.up), t.want);
+  }
+}
  
 

@@ -41,8 +41,8 @@ public:
   bool isInvertible() const;
 
   static Matrix identityMatrix(size_t size);
-  static Matrix translation(float x, float y,float z);
-  static Matrix translationInverse(float x, float y,float z);
+  static Matrix translate(float x, float y,float z);
+  static Matrix translateInverse(float x, float y,float z);
   static Matrix scale(float x, float y,float z);
   static Matrix scaleInverse(float x, float y,float z);
   static Matrix reflectX();
@@ -52,7 +52,7 @@ public:
   static Matrix rotationAlongY(float radians);
   static Matrix rotationAlongZ(float radians);
   static Matrix shear(float xy, float xz, float yx, float yz, float zx, float zy);
-
+  static Matrix viewTransform(Tuple from, Tuple to, Tuple up);
 
   Matrix& operator=(const Matrix & other){
     if(this != &other){

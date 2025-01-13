@@ -64,4 +64,8 @@ std::shared_ptr<Intersections> raySphereIntersect(Ray const& ray, Sphere* sphere
   return intersections;
 }
 
+std::ostream& operator<<(std::ostream &os, const Ray& r){
+    return os << "origin: " << r.origin << " " << "direction: " << r.direction;
+}
+
 

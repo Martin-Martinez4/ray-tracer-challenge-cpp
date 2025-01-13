@@ -174,10 +174,10 @@ Matrix Matrix::identityMatrix(size_t size){
     return mat;
 }
 
-Matrix Matrix::translation(float x, float y,float z){
+Matrix Matrix::translate(float x, float y,float z){
     return Matrix{{1,0,0,x, 0,1,0,y, 0,0,1,z, 0,0,0,1}};
 }
-Matrix Matrix::translationInverse(float x, float y,float z){
+Matrix Matrix::translateInverse(float x, float y,float z){
     x*= -1.0f;
     y*= -1.0f;
     z*= -1.0f;
@@ -207,7 +207,7 @@ Matrix Matrix::rotationAlongY(float radians){
     return Matrix{{cosf(radians),0,sinf(radians),0, 0,1,0,0, -sinf(radians),0,cosf(radians),0, 0,0,0,1}};
 }
 Matrix Matrix::rotationAlongZ(float radians){
-    return Matrix{{cos(radians),-sin(radians),0,0, sin(radians),cos(radians),0,0, 0,0,1,0, 0,0,0,1}};
+    return Matrix{{cosf(radians),-sinf(radians),0,0, sinf(radians),cosf(radians),0,0, 0,0,1,0, 0,0,0,1}};
 }
 Matrix Matrix::shear(float xy, float xz, float yx, float yz, float zx, float zy){
     return Matrix{{1,xy,xz,0, yx,1,yz,0, zx,zy,1,0, 0,0,0,1}};
@@ -243,6 +243,17 @@ Tuple tupleMultiply(Matrix const& matrix, Tuple const& tuple){
     };
 }
 
+Matrix Matrix::viewTransform(Tuple from, Tuple to, Tuple up){
+  Tuple t = to.subtractTuple(from);
+  Tuple forward = normalize(t);
+  Tuple left = forward.cross(normalize(up));
+  Tuple trueUp = left.cross(forward);
+
+  Matrix orientationMat = Matrix(std::array<float, 16>{left.x,left.y,left.z,0, trueUp.x,trueUp.y,trueUp.z,0, -forward.x,-forward.y,-forward.z, 0, 0,0,0,1});
+
+  return orientationMat.matrixMultiply(Matrix::translate(-from.x, -from.y, -from.z));
+
+}
 
 
 
