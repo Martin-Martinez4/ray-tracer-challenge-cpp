@@ -6,10 +6,10 @@
 #include "Color.h"
 #include <iostream>
 #include <memory>
+#include "Intersection.h"
 
 struct Ray;
 struct Material;
-struct Intersections;
 
 class Shape {
 public:

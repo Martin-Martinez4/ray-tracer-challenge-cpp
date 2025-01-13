@@ -31,8 +31,8 @@ Matrix Camera::getInverseTransform(){
 }
 
 Ray Camera::rayForPixel(float px, float py){
-  float xOffset = (px + 0.5) * pixelSize;
-  float yOffset = (py + 0.5) * pixelSize;
+  float xOffset = (px + 0.5f) * pixelSize;
+  float yOffset = (py + 0.5f) * pixelSize;
 
   float worldX = halfWidth - xOffset;
   float worldY = halfHeight - yOffset;
@@ -47,7 +47,7 @@ Ray Camera::rayForPixel(float px, float py){
   
 
 void Camera::setupPixelSize(){
-  float halfView = tanf(fieldOfView/2);
+  float halfView = std::tan(fieldOfView/2);
   float aspect = hSize/vSize;
 
   if(aspect >= 1){
@@ -58,5 +58,5 @@ void Camera::setupPixelSize(){
     halfHeight = halfView;
   }
 
-  pixelSize = (halfWidth * 2) / hSize;
+  pixelSize = (halfWidth * 2.0f) / hSize;
 }

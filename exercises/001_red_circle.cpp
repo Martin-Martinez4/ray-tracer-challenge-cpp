@@ -3,8 +3,8 @@
 #include "Canvas.h"
 #include "Color.h"
 #include "Tuple.h"
-#include "Ray.h"
 #include "Intersection.h"
+#include "Ray.h"
 #include <cstddef>
 #include <memory>
 #include <iostream>
@@ -62,7 +62,7 @@ Canvas Ex001(){
 
       for(size_t s = 0; s < 4; ++s){
 
-        std::shared_ptr<Intersections> xs = raySphereIntersect(r, shapes[s]);
+        std::shared_ptr<Intersections> xs (raySphereIntersect(r, shapes[s]));
 
         if((*xs).size() > 0){ 
           canvas.setPixel(x, y, shapes[s]->getColor());

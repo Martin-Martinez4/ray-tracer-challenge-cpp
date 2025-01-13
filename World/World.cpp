@@ -53,9 +53,10 @@ Color colorAt(Ray ray, World world, int reflectionsLeft){
 Canvas render(Camera camera, World world){
   Canvas image = Canvas(camera.hSize, camera.vSize);
 
-  for(size_t x = 0; x < camera.vSize-1; ++x){
-    for(size_t y = 0; y < camera.hSize-1; ++y){
-      Color c = colorAt(camera.rayForPixel(x, y), world, 1);
+  for(size_t y = 0; y < camera.vSize-1; ++y){
+    for(size_t x = 0; x < camera.hSize-1; ++x){
+      Ray ray = camera.rayForPixel(x,y);
+      Color c = colorAt(ray, world, 1);
       image.setPixel(x, y, c);
     }
   }

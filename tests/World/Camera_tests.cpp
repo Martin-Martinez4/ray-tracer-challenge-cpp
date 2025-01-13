@@ -1,12 +1,12 @@
 
 #include "Camera.h"
 #include <array>
-#include <cmath>
 #include <cstddef>
 #include <stdexcept>
 #include <gtest/gtest.h>
 #include <string>
 #include <vector>
+#include "Constants.h"
 
 TEST(CameraTest, RayForPixel){
 

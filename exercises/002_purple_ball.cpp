@@ -6,6 +6,7 @@
 #include "Light.h"
 #include "Ray.h"
 #include "Intersection.h"
+#include "Constants.h"
 
 Canvas Ex002(){
   
@@ -28,6 +29,12 @@ std::clog << "Start \n";
   
   Sphere violet = Sphere();
   violet.setColor(color2);
+  violet.setTransforms({
+    Matrix::scale(1, 0.5f, 1),
+    Matrix::rotationAlongY(M_PI_2)
+  });
+
+  
 
   for(size_t  y = 0; y < canvasPixels; ++y){
 

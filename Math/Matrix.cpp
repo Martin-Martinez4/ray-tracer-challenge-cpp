@@ -111,7 +111,12 @@ Matrix Matrix::transpose() const{
 float Matrix::determinate() const {
   if(size == 2){
     return get(0,0)*get(1,1) - get(0,1)*get(1,0);
-  }else{
+  }else if(size == 3){
+    	return cofactor(0, 0)*get(0, 0) + cofactor(0, 1)*get(0, 1) + cofactor(0, 2)*get(0, 2);
+  }else if(size == 4){
+    return cofactor(0, 0)*get(0, 0) + cofactor(0, 1)*get(0, 1) + cofactor(0, 2)*get(0, 2) + cofactor(0, 3)*get(0, 3);
+  }
+  else{
     float acc = 0;
     for(size_t y = 0; y < size; ++y){
       acc += get(0, y)*cofactor(0, y);
@@ -201,7 +206,7 @@ Matrix Matrix::refelctZ(){
      return Matrix{{1,0,0,0, 0,-1,0,0, 0,0,1,0, 0,0,0,1}};
 }
 Matrix Matrix::rotationAlongX(float radians){
-    return Matrix{{1,0,0,0, 0,cosf(radians),-sinf(radians),0, 0,sinf(radians),cosf(radians),0, 0,0,0,1}};
+    return Matrix{{1, 0, 0, 0, 0, cosf(radians), -sinf(radians), 0, 0, sinf(radians), cosf(radians), 0, 0, 0, 0, 1}};
 }
 Matrix Matrix::rotationAlongY(float radians){
     return Matrix{{cosf(radians),0,sinf(radians),0, 0,1,0,0, -sinf(radians),0,cosf(radians),0, 0,0,0,1}};
@@ -249,7 +254,12 @@ Matrix Matrix::viewTransform(Tuple from, Tuple to, Tuple up){
   Tuple left = forward.cross(normalize(up));
   Tuple trueUp = left.cross(forward);
 
-  Matrix orientationMat = Matrix(std::array<float, 16>{left.x,left.y,left.z,0, trueUp.x,trueUp.y,trueUp.z,0, -forward.x,-forward.y,-forward.z, 0, 0,0,0,1});
+  Matrix orientationMat = Matrix(std::array<float, 16>{   
+    left.x, left.y, left.z, 0.0,
+    trueUp.x, trueUp.y, trueUp.z, 0.0,
+    -forward.x, -forward.y, -forward.z, 0.0,
+    0.0, 0.0, 0.0, 1.0
+  });
 
   return orientationMat.matrixMultiply(Matrix::translate(-from.x, -from.y, -from.z));
 

@@ -22,7 +22,7 @@ std::stringstream& ppmHeader(std::stringstream& ss,  size_t width, size_t height
 
       for(size_t w = 0; w < width; w++){
 
-        Color currentColor = canvas.getPixel(h, w);
+        Color currentColor = canvas.getPixel(w, h);
 
         if(w%11 == 0 && w != 0){
           ss << "\n";
