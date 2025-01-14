@@ -50,7 +50,7 @@ TEST(TupleTest, AddTuples){
   for(size_t i = 0; i < numTests; i++){
     test test = tests[i];
 
-    EXPECT_EQ(test.t1.addTuple(test.t2), test.want); 
+    EXPECT_EQ(test.t1 + test.t2, test.want); 
   }
 }
 
@@ -75,7 +75,7 @@ TEST(TupleTest, SubtractTuples){
   for(size_t i = 0; i < numTests; i++){
     test test = tests[i];
 
-    EXPECT_EQ(test.t1.subtractTuple(test.t2), test.want); 
+    EXPECT_EQ(test.t1 - test.t2, test.want); 
   }
 }
 
@@ -120,7 +120,7 @@ TEST(TupleTest, MultiplyScalarTuple){
   
   for(size_t i = 0; i < numTests; i++){
     test test = tests[i];
-    EXPECT_EQ(test.t1.multiplyScalar(test.s), test.want); 
+    EXPECT_EQ(test.t1 * test.s, test.want); 
   }
 }
 
@@ -143,7 +143,7 @@ TEST(TupleTest, DivideScalarTuple){
   
   for(size_t i = 0; i < numTests; i++){
     test test = tests[i];
-    EXPECT_EQ(test.t1.divideScalar(test.s), test.want); 
+    EXPECT_EQ(test.t1/test.s, test.want); 
   }
 }
 

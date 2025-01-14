@@ -27,6 +27,22 @@ struct Color {
 
   }
 
+  Color operator *(Color const& color) const{
+  
+   return Color(r*color.r, g*color.g, b*color.b);
+
+  }
+  Color operator -(Color const& color) const{
+  
+   return Color(r-color.r, g-color.g, b-color.b);
+
+  }
+  Color operator +(Color const& color) const{
+  
+   return Color(r+color.r, g+color.g, b+color.b);
+
+  }
+
   bool operator==(Color const& otherColor) const{
 
     return (

@@ -7,7 +7,7 @@ Color Color::add(Color const& color) const{
 } 
 
 Color Color::subtract(Color const& color) const{
-  return Color(r+color.r, g+color.g, b+color.b);
+  return Color(r-color.r, g-color.g, b-color.b);
 }
 
 // Color Color::scalarMultiply(float scalar) const{

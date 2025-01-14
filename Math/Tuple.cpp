@@ -39,27 +39,27 @@ Tuple Tuple::cross(Tuple const& tuple) const{
   ); 
 }
 
-Tuple Tuple::addTuple(Tuple tuple) const{
-  return Tuple{x+tuple.x, y+tuple.y, z+tuple.z, w+tuple.w};
-}
-Tuple Tuple::addScalar(float f) const{
-  return Tuple{x+f, y+f, z+f, w+f};
-}
+// Tuple Tuple::addTuple(Tuple tuple) const{
+//   return Tuple{x+tuple.x, y+tuple.y, z+tuple.z, w+tuple.w};
+// }
+// Tuple Tuple::addScalar(float f) const{
+//   return Tuple{x+f, y+f, z+f, w+f};
+// }
 
-Tuple Tuple::subtractTuple(Tuple tuple) const{
-  return Tuple{x-tuple.x, y-tuple.y, z-tuple.z, w-tuple.w};
-}
-Tuple Tuple::subtractScalar(float f) const{
-  return Tuple{x-f, y-f, z-f, w-f};
-}
+// Tuple Tuple::subtractTuple(Tuple tuple) const{
+//   return Tuple{x-tuple.x, y-tuple.y, z-tuple.z, w-tuple.w};
+// }
+// Tuple Tuple::subtractScalar(float f) const{
+//   return Tuple{x-f, y-f, z-f, w-f};
+// }
 
-Tuple Tuple::multiplyScalar(float f) const {
-  return Tuple{x*f, y*f, z*f, w*f};
-}
-Tuple Tuple::divideScalar(float f) const {
+// Tuple Tuple::multiplyScalar(float f) const {
+//   return Tuple{x*f, y*f, z*f, w*f};
+// }
+// Tuple Tuple::divideScalar(float f) const {
 
-  return Tuple{x/f, y/f, z/f, w/f};
-}
+//   return Tuple{x/f, y/f, z/f, w/f};
+// }
 
 Tuple Tuple::negate() const{
   return Tuple{-x, -y, -z, -w};
@@ -80,8 +80,8 @@ bool Tuple::equal(Tuple const& tuple){
 
 Tuple Tuple::reflectBy(Tuple const& normalVector) const{
 
-   return this->subtractTuple(
-     normalVector.multiplyScalar(this->dot(normalVector) * 2)
+   return *this - (
+     normalVector * (this->dot(normalVector) * 2)
   );
 
   //Tuple smulti = normalVector.multiplyScalar(2);

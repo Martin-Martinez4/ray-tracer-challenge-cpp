@@ -61,7 +61,7 @@ Canvas Ex003(){
   
   World w = World({floor, leftWall, middleSphere, rightSphere, leftSphere}, l);
 
-  Camera camera = Camera(100, 50, M_PI_F/3);
+  Camera camera = Camera(200, 100, M_PI_F/3);
   camera.setTransform(Matrix::viewTransform(point(0,1.5,-5), point(0,1,0), vector(0,1,0)));
   
   return render(camera, w);

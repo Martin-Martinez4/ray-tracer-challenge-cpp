@@ -29,14 +29,14 @@ struct Tuple {
   float dot(Tuple const& tuple) const;
   Tuple cross(Tuple const& tuple) const;
 
-  Tuple addTuple(Tuple tuple) const;
-  Tuple addScalar(float f) const;
+  // Tuple addTuple(Tuple tuple) const;
+  // Tuple addScalar(float f) const;
 
-  Tuple subtractTuple(Tuple tuple) const;
-  Tuple subtractScalar(float f) const;
+  // Tuple subtractTuple(Tuple tuple) const;
+  // Tuple subtractScalar(float f) const;
 
-  Tuple multiplyScalar(float f) const;
-  Tuple divideScalar(float f) const;
+  // Tuple multiplyScalar(float f) const;
+  // Tuple divideScalar(float f) const;
   
   Tuple negate() const;
 
@@ -45,6 +45,30 @@ struct Tuple {
   bool equal(Tuple const& tuple);
 
   Tuple reflectBy(Tuple const& normalVector) const;
+
+  Tuple operator +(Tuple const& other) const{
+    return Tuple{x+other.x, y+other.y, z+other.z, w+other.w};
+  }
+  Tuple operator +(float f) const{
+    return Tuple{x+f, y+f, z+f, w+f};
+  }
+
+  Tuple operator -(Tuple const& other) const{
+    return Tuple{x-other.x, y-other.y, z-other.z, w-other.w};
+  }
+  Tuple operator -(float f) const{
+    return Tuple{x-f, y-f, z-f, w-f};
+  }
+  Tuple operator -() const{
+    return Tuple{-x, -y, -z, -w};
+  }
+
+  Tuple operator *(float f) const{
+    return Tuple{x*f, y*f, z*f, w*f};
+  }
+  Tuple operator /(float f) const{
+    return Tuple{x/f, y/f, z/f, w/f};
+  }
 
   bool operator==(Tuple const& other) const{
     return (

@@ -218,7 +218,7 @@ Tuple tupleMultiply(Matrix const& matrix, Tuple const& tuple){
 }
 
 Matrix Matrix::viewTransform(Tuple from, Tuple to, Tuple up){
-  Tuple t = to.subtractTuple(from);
+  Tuple t = to - from;
   Tuple forward = normalize(t);
   Tuple left = forward.cross(normalize(up));
   Tuple trueUp = left.cross(forward);

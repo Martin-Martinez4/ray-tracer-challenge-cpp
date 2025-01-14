@@ -8,7 +8,7 @@ Color lighting(Material material, Light light, Tuple point, Tuple eyeVec, Tuple 
 
   Color effectiveColor = material.color.multiply(light.intensity);
   
-  Tuple temp = light.position.subtractTuple(point);
+  Tuple temp = light.position - point;
   Tuple lightVec = normalize(temp);
   Color ambient = effectiveColor * material.ambient;
   float lightDotNormal = lightVec.dot(normalVec);

@@ -8,7 +8,7 @@
 Tuple Sphere::normalAt(Tuple worldPoint) {
   
   Tuple objectPoint = tupleMultiply(getInverseTransform(), worldPoint);
-  Tuple objectNormal = objectPoint.subtractTuple(point(0,0,0));
+  Tuple objectNormal = objectPoint - point(0,0,0);
   Tuple worldNormal = tupleMultiply(getInverseTransform().transpose(), objectNormal);
   worldNormal.w = 0;
   // Tuple wp = worldPoint.subtractTuple(point(0,0,0));
@@ -19,7 +19,7 @@ std::shared_ptr<Intersections> Sphere::localIntersect(Ray ray){
 
   Ray r = ray.transform(getInverseTransform());
   
-  Tuple sphereToRay = r.origin.subtractTuple(point(0, 0, 0));
+  Tuple sphereToRay = r.origin - point(0, 0, 0);
 
   float a = r.direction.dot(r.direction);
   float b = 2 * r.direction.dot(sphereToRay);

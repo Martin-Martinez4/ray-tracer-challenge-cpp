@@ -45,7 +45,7 @@ std::clog << "Start \n";
       float worldX = -half + pixelSize * float(x);
 
       Tuple position = point(worldX, worldY, wallZ);
-      Tuple temp = position.subtractTuple(rayOrigin);
+      Tuple temp = position - rayOrigin;
       Tuple normalized = normalize(temp);
 
       Ray r = Ray{rayOrigin, normalized};
@@ -60,7 +60,7 @@ std::clog << "Start \n";
         if(found != nullptr){
           Tuple point =  r.position(found->t);
           Tuple normal = found->s->normalAt(point);
-          Tuple eye = r.direction.multiplyScalar(-1);
+          Tuple eye = r.direction.negate();
 
           Color color = lighting(found->s->getMaterial(), light, point, eye, normal, false);
 

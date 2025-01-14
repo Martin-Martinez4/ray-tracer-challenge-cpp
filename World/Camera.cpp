@@ -39,7 +39,7 @@ Ray Camera::rayForPixel(float px, float py){
 
   Tuple pixel = tupleMultiply(getInverseTransform(), point(worldX, worldY, -1));
   Tuple origin = tupleMultiply(getInverseTransform(), point(0, 0, 0));
-  Tuple pSO = pixel.subtractTuple(origin);
+  Tuple pSO = pixel - origin;
   Tuple direction = normalize(pSO);
 
   return Ray(origin, direction);

@@ -55,7 +55,7 @@ Canvas Ex001(){
       float worldX = -half + pixelSize * float(x);
 
       Tuple position = point(worldX, worldY, wallZ);
-      Tuple temp = position.subtractTuple(rayOrigin);
+      Tuple temp = position - rayOrigin;
       Tuple normalized = normalize(temp);
 
       Ray r = Ray{rayOrigin, normalized};

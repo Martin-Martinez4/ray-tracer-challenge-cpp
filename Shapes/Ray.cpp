@@ -9,7 +9,7 @@
 
 
 Tuple Ray::position(float f) const{
-  return origin.addTuple(direction.multiplyScalar(f));
+  return origin + direction * f;
 }
 
 Ray Ray::translate(float x, float y, float z) const{
@@ -39,7 +39,7 @@ bool Ray::equal(Ray const& other) const{
 std::shared_ptr<Intersections> raySphereIntersect(Ray const& ray, Sphere* sphere){
   Ray r = ray.transform(sphere->getInverseTransform());
   
-  Tuple sphereToRay = r.origin.subtractTuple(point(0, 0, 0));
+  Tuple sphereToRay = r.origin - point(0, 0, 0);
 
   float a = r.direction.dot(r.direction);
   float b = 2 * r.direction.dot(sphereToRay);
