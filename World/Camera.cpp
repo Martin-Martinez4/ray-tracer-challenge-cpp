@@ -12,16 +12,16 @@ Camera::Camera(float hSize, float vSize, float fieldOfView):hSize{hSize}, vSize{
 Matrix Camera::getTransform(){
   return transform;
 }
-void Camera::setTransform(Matrix const& transform){
-  this->transform = transform.matrixMultiply(this->transform);
+void Camera::setTransform(Matrix transform){
+  this->transform = transform * this->transform;
   this->inverseTransform = this->transform.inverse();
 }
 void Camera::setTransforms(std::vector<Matrix> transforms){
-  Matrix transformation = identityMatrix4x4;
+  Matrix transformation = Matrix::identityMatrix(4);
 
   size_t size = transforms.size();
   for(size_t t = 0; t < size; ++t){
-    transformation = transforms[t].matrixMultiply(transformation);
+    transformation = transforms[t] * transformation;
   }
 
   this->setTransform(transformation);

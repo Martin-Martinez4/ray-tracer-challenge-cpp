@@ -16,10 +16,16 @@ struct Color {
 
   Color add(Color const& color) const; 
   Color subtract(Color const& color) const;
-  Color scalarMultiply(float scalar) const;
+  // Color scalarMultiply(float scalar) const;
   // hadamard product
   Color multiply(Color const& color) const;
   bool equal(Color const& color) const;
+
+  Color operator *(float f){
+  
+    return Color(r*f, g*f, b*f);
+
+  }
 
   bool operator==(Color const& otherColor) const{
 

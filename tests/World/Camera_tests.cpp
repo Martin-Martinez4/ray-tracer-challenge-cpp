@@ -97,14 +97,14 @@ TEST(CameraTest, RayForPixel){
           if(t.trs[j].args.size() != 1){
             throw std::invalid_argument("test "+ std::to_string(i) + " tranformation " + std::to_string(j) + " failed needed 1 argument got " + std::to_string(t.trs[j].args.size()));
           }
-          transforms = transforms.matrixMultiply(Matrix::rotationAlongY(t.trs[j].args[0]));
+          transforms = transforms * Matrix::rotationAlongY(t.trs[j].args[0]);
           break;
 
         case transformName::translate :
           if(t.trs[j].args.size() != 3){
             throw std::invalid_argument("test "+ std::to_string(i) + " tranformation " + std::to_string(j) + " failed needed 3 argument got " + std::to_string(t.trs[j].args.size()));
           }
-          transforms = transforms.matrixMultiply(Matrix::translate(t.trs[j].args[0], t.trs[j].args[1], t.trs[j].args[2]));
+          transforms = transforms * Matrix::translate(t.trs[j].args[0], t.trs[j].args[1], t.trs[j].args[2]);
           break;
 
           default:

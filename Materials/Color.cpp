@@ -10,9 +10,9 @@ Color Color::subtract(Color const& color) const{
   return Color(r+color.r, g+color.g, b+color.b);
 }
 
-Color Color::scalarMultiply(float scalar) const{
-  return Color(r*scalar, g*scalar, b*scalar);
-}
+// Color Color::scalarMultiply(float scalar) const{
+//   return Color(r*scalar, g*scalar, b*scalar);
+// }
 
 Color Color::multiply(Color const& color) const {
   return Color(r*color.r, g*color.g, b*color.b);

@@ -116,7 +116,7 @@ TEST(MatrixTest, MatrixMatrixMultiply){
   
   for(size_t i = 0; i < numTests; i++){
     test test = tests[i];
-    EXPECT_EQ(test.m1.matrixMultiply(test.m2), test.want); 
+    EXPECT_EQ(test.m1 * test.m2, test.want); 
   }
 }
 
@@ -531,13 +531,13 @@ TEST(MatrixTest, ViewTransform){
       point(0, 0, 0),
       point(0, 0, 1),
       vector(0, 1, 0),
-      id4.matrixMultiply(Matrix::scale(-1,1,-1))
+      id4 * Matrix::scale(-1,1,-1)
     },
     {
       point(0, 0, 8),
       point(0, 0, 0),
       vector(0, 1, 0),
-      id4.matrixMultiply(Matrix::translate(0, 0, -8))
+      id4 * Matrix::translate(0, 0, -8)
     },
     {
       point(1, 3, 2),

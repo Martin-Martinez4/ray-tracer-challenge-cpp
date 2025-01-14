@@ -12,18 +12,7 @@ float Matrix::get(size_t x, size_t y) const{
 }
 
 void Matrix::set(size_t x, size_t y, float value) {
-    matrix[y + x * size] = value; 
-}
-
-Matrix Matrix::scalarMultiply(float scalar) const{
-
-    Matrix copy = *this;
-
-    std::for_each(copy.matrix.begin(), copy.matrix.end(), [scalar](float& x){
-        x *= scalar;
-    });
-
-    return copy;
+    matrix[y + x*size] = value; 
 }
 
 bool Matrix::equal(Matrix const& otherMatrix) const{
@@ -42,27 +31,7 @@ bool Matrix::equal(Matrix const& otherMatrix) const{
     return true;
 }
 
-Matrix Matrix::matrixMultiply(Matrix const& otherMatrix) const{
-    // All Matrixes are squared in this program
-    if(size != otherMatrix.size){
-        throw std::invalid_argument("matrices tried to multiply matrices of different sizes");
-    }
 
-    Matrix newMatrix = Matrix(size);
-
-    for(size_t x = 0; x < size; ++x){
-        for(size_t y = 0; y < size; ++y){
-            float acc = 0.0f;
-            for(size_t k = 0; k < size; ++k){
-                acc += this->get(x, k) * otherMatrix.get(k, y);
-            }
-
-            newMatrix.set(x, y, acc);
-        }
-    }
-
-    return newMatrix;
-}
 
 Matrix Matrix::transpose() const{
   Matrix temp = Matrix(size);
@@ -158,7 +127,7 @@ Matrix Matrix::inverse() const{
     }else{
         float factor = 1/ determinate;
         
-        return cofactorMatrix().transpose().scalarMultiply(factor);
+        return  (cofactorMatrix().transpose()) * factor;
     }
 
     float factor = 1/ determinate;
@@ -261,7 +230,7 @@ Matrix Matrix::viewTransform(Tuple from, Tuple to, Tuple up){
     0.0, 0.0, 0.0, 1.0
   });
 
-  return orientationMat.matrixMultiply(Matrix::translate(-from.x, -from.y, -from.z));
+  return orientationMat * Matrix::translate(-from.x, -from.y, -from.z);
 
 }
 

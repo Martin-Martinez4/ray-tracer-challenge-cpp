@@ -17,7 +17,7 @@ public:
   Shape(Material mat);
 
   Matrix getTransform();
-  void setTransform(Matrix const& transform);
+  void setTransform(Matrix transform);
   void setTransforms(std::vector<Matrix> transforms);
 
   Matrix getInverseTransform();

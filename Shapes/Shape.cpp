@@ -9,16 +9,16 @@ Shape::Shape(Material mat):transform{Matrix::identityMatrix(4)}, inverseTransfor
 Matrix Shape::getTransform(){
   return transform;
 }
-void Shape::setTransform(Matrix const& transform){
-  this->transform = transform.matrixMultiply(this->transform);
+void Shape::setTransform(Matrix  transform){
+  this->transform = (transform) * (this->transform);
   this->inverseTransform = this->transform.inverse();
 }
 void Shape::setTransforms(std::vector<Matrix> transforms){
-  Matrix transformation = identityMatrix4x4;
+  Matrix transformation = Matrix::identityMatrix(4);
 
   size_t size = transforms.size();
   for(size_t t = 0; t < size; ++t){
-    transformation = transforms[t].matrixMultiply(transformation);
+    transformation = transforms[t] * transformation;
   }
 
   this->setTransform(transformation);

@@ -10,7 +10,7 @@ Color lighting(Material material, Light light, Tuple point, Tuple eyeVec, Tuple 
   
   Tuple temp = light.position.subtractTuple(point);
   Tuple lightVec = normalize(temp);
-  Color ambient = effectiveColor.scalarMultiply(material.ambient);
+  Color ambient = effectiveColor * material.ambient;
   float lightDotNormal = lightVec.dot(normalVec);
 
 
@@ -22,8 +22,8 @@ Color lighting(Material material, Light light, Tuple point, Tuple eyeVec, Tuple 
     diffuse = Color(0,0,0);
     specular = Color(0,0,0);
   }else{
-    diffuse = effectiveColor.scalarMultiply(material.diffuse);
-    diffuse = diffuse.scalarMultiply(lightDotNormal);
+    diffuse = effectiveColor * material.diffuse;
+    diffuse = diffuse * lightDotNormal;
     
   
     Tuple reflectVec = lightVec.negate();
@@ -33,7 +33,7 @@ Color lighting(Material material, Light light, Tuple point, Tuple eyeVec, Tuple 
 
     if(reflectDotEye > 0){
       float factor = pow(reflectDotEye, material.shininess);
-      specular = light.intensity.scalarMultiply(material.specular).scalarMultiply(factor);
+      specular = light.intensity * material.specular * factor;
     }
   }
   return ambient.add(diffuse.add(specular));

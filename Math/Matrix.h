@@ -10,6 +10,8 @@
 #include "Floats.h"
 #include "Tuple.h"
 #include <array>
+#include <algorithm>
+
 
 /*
   A long vector, 
@@ -25,10 +27,10 @@ public:
   size_t size;
 
   float get(size_t x, size_t y) const;
-  void set(size_t x, size_t y, float value) ;
+  void set(size_t x, size_t y, float value);
   bool equal(Matrix const& otherMatrix) const;
-  Matrix scalarMultiply(float scalar) const;
-  Matrix matrixMultiply(Matrix const& otherMatrix) const;
+  // Matrix scalarMultiply(float scalar) const;
+
   Matrix transpose() const;
 
   Matrix subMatrix(size_t row, size_t column) const;
@@ -79,6 +81,63 @@ public:
     return true;
   }
 
+  
+  Matrix operator *(float f){
+     Matrix copy = *this;
+
+    std::for_each(copy.matrix.begin(), copy.matrix.end(), [f](float& x){
+        x *= f;
+    });
+
+    return copy;
+  }
+
+
+   Matrix operator *(const Matrix  & otherMatrix) {
+     // All Matrixes are squared in this program
+    if(size != otherMatrix.size){
+        throw std::invalid_argument("matrices tried to multiply matrices of different sizes");
+    }
+
+    Matrix newMatrix = Matrix(size);
+
+    for(size_t x = 0; x < size; ++x){
+        for(size_t y = 0; y < size; ++y){
+            float acc = 0.0f;
+            for(size_t k = 0; k < size; ++k){
+                acc += this->get(x, k) * otherMatrix.get(k, y);
+            }
+
+            newMatrix.set(x, y, acc);
+        }
+    }
+
+    return newMatrix;
+  }
+
+
+     Matrix operator *=(const Matrix& otherMatrix){
+     // All Matrixes are squared in this program
+    if(size != otherMatrix.size){
+        throw std::invalid_argument("matrices tried to multiply matrices of different sizes");
+    }
+
+    Matrix newMatrix = Matrix(size);
+
+    for(size_t x = 0; x < size; ++x){
+        for(size_t y = 0; y < size; ++y){
+            float acc = 0.0f;
+            for(size_t k = 0; k < size; ++k){
+                acc += this->get(x, k) * otherMatrix.get(k, y);
+            }
+
+            newMatrix.set(x, y, acc);
+        }
+    }
+
+    return newMatrix;
+  }
+
   friend std::ostream& operator<<(std::ostream &os, const Matrix& m);
 
 
@@ -88,7 +147,6 @@ private:
 };
 
 Tuple tupleMultiply(Matrix const& matrix, Tuple const& tuple);
-const Matrix identityMatrix4x4 = Matrix({1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1});
 
 #endif
 
