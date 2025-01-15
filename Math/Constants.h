@@ -3,7 +3,7 @@
 #include <cmath>
 
 // Because Windows
-#ifdef WIN32
+#ifdef _WIN32
 
   double const M_PI = 3.14159265358979323846;
   double const M_PI_2 = 1.57079632679489661923;
