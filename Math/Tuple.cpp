@@ -66,7 +66,7 @@ Tuple Tuple::negate() const{
 }
 
 float Tuple::magnitude(){
-  return sqrtf((x*x) + (y*y) + (z*z) + (w*w));
+  return sqrt((x*x) + (y*y) + (z*z) + (w*w));
 }
 
 bool Tuple::equal(Tuple const& tuple){
@@ -80,9 +80,7 @@ bool Tuple::equal(Tuple const& tuple){
 
 Tuple Tuple::reflectBy(Tuple const& normalVector) const{
 
-   return *this - (
-     normalVector * (this->dot(normalVector) * 2)
-  );
+   return (*this) - normalVector * this->dot(normalVector) * 2;
 
   //Tuple smulti = normalVector.multiplyScalar(2);
   //float d = dot(normalVector);

@@ -16,13 +16,11 @@ Tuple Sphere::normalAt(Tuple worldPoint) {
 }
 
 std::shared_ptr<Intersections> Sphere::localIntersect(Ray ray){
-
-  Ray r = ray.transform(getInverseTransform());
   
-  Tuple sphereToRay = r.origin - point(0, 0, 0);
+  Tuple sphereToRay = ray.origin - point(0, 0, 0);
 
-  float a = r.direction.dot(r.direction);
-  float b = 2 * r.direction.dot(sphereToRay);
+  float a = ray.direction.dot(ray.direction);
+  float b = 2 * ray.direction.dot(sphereToRay);
   float c = sphereToRay.dot(sphereToRay) - 1;
 
   float discriminant = (b * b) - (4 * a * c);

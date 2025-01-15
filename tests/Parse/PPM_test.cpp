@@ -113,7 +113,7 @@ TEST(ParseTest, PPMBody){
     for(size_t i = 0; i < test.colorChanges.size(); i++){
       colorChange cc = test.colorChanges[i];
 
-      c.setPixel(cc.x, cc.y, cc.color);
+      c.setPixel(cc.y, cc.x, cc.color);
     }
 
     std::stringstream ss;

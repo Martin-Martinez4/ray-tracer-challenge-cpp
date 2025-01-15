@@ -10,8 +10,9 @@ Matrix Shape::getTransform(){
   return transform;
 }
 void Shape::setTransform(Matrix  transform){
-  this->transform = (transform) * (this->transform);
-  this->inverseTransform = this->transform.inverse();
+  Matrix t = (transform) * (this->transform);
+  this->transform = t;
+  this->inverseTransform = t.inverse();
 }
 void Shape::setTransforms(std::vector<Matrix> transforms){
   Matrix transformation = Matrix::identityMatrix(4);

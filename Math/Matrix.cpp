@@ -126,8 +126,9 @@ Matrix Matrix::inverse() const{
         throw std::invalid_argument("function is not invertable");
     }else{
         float factor = 1/ determinate;
+        Matrix tCofactor = cofactorMatrix().transpose();
         
-        return  (cofactorMatrix().transpose()) * factor;
+        return  tCofactor * factor;
     }
 
     float factor = 1/ determinate;
