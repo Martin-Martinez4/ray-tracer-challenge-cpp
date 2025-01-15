@@ -12,10 +12,9 @@ public:
   Sphere(): Shape(){};
   Sphere(Material mat): Shape(mat){};
   
-  std::shared_ptr<Intersections> localIntersect(Ray ray);
+  std::shared_ptr<Intersections> localIntersect(Ray ray) override;
 
   Tuple normalAt(Tuple worldPoint) override;
-  std::shared_ptr<Intersections> intersect(Ray ray) override;
   
 private:
 

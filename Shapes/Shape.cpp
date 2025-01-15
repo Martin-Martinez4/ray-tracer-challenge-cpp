@@ -2,6 +2,7 @@
 #include "Shape.h"
 #include "Matrix.h"
 #include "Color.h"
+#include "Ray.h"
 
 Shape::Shape():transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)), material{Material()}{};
 Shape::Shape(Material mat):transform{Matrix::identityMatrix(4)}, inverseTransform(Matrix::identityMatrix(4)), material{mat}{};
@@ -46,4 +47,8 @@ Material Shape::getMaterial(){
 
 void Shape::setMaterial(Material m){
   material = m;
+}
+
+std::shared_ptr<Intersections> Shape::intersect(Ray ray){
+  return localIntersect(ray.transform(getInverseTransform()));
 }

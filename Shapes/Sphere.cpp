@@ -43,7 +43,5 @@ std::shared_ptr<Intersections> Sphere::localIntersect(Ray ray){
 }
 
 
-std::shared_ptr<Intersections> Sphere::intersect(Ray ray){
-  return localIntersect(ray.transform(getInverseTransform()));
-}
+
 

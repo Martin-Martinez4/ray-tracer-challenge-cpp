@@ -30,7 +30,8 @@ public:
   void setMaterial(Material m);
 
   virtual Tuple normalAt(Tuple worldPoint) = 0;
-  virtual std::shared_ptr<Intersections> intersect(Ray ray) = 0;
+  std::shared_ptr<Intersections> intersect(Ray ray);
+  virtual std::shared_ptr<Intersections> localIntersect(Ray ray) = 0;
 
 
 private:
