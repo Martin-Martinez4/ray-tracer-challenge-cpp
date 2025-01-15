@@ -1,6 +1,5 @@
 #ifndef MATH_CONSTANTS_H_
 #define MATH_CONSTANTS_H_
-#include <cmath>
 
 // Because Windows
 #ifdef _WIN32

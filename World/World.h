@@ -21,6 +21,7 @@ World createDefaultWorld();
 
 std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world);
 
+bool isShadowed(World world, Tuple point);
 Color shadeHit(World world, Computations comps);
 
 std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world); 

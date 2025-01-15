@@ -156,7 +156,8 @@ TEST(TestWorld, ShadeHit){
       theOtherWorld.shapes[1],
       theOtherWorld,
       Intersection{0.5f, theOtherWorld.shapes[1].get()},
-      Color(0.90498f, 0.90498f, 0.90498f)
+      // Color(0.90498f, 0.90498f, 0.90498f)
+      Color(0.1f, 0.1f, 0.1f)
     },
     
   };
@@ -168,5 +169,65 @@ TEST(TestWorld, ShadeHit){
   
     EXPECT_EQ(shadeHit(t.world, c), t.want);
   }
+  
+}
+
+TEST(TestWorld, IsShadowed){ 
+ 
+  struct test {
+    Tuple point;
+    bool want;
+  };
+
+  World theWorld = createDefaultWorld();
+
+  const size_t numTests = 4;
+
+  test tests[numTests] = {
+    {
+     point(0,10,10),
+     false
+    },
+    {  
+      point(-20, 20, -20),
+      false
+    },
+    {  
+      point(10, -10, 10),
+      true
+    },
+    {  
+      point(-22, 2, -2),
+      false
+    },
+    
+  };
+
+  for(size_t i = 0; i < numTests; ++i){
+    test t = tests[i];
+
+  
+    EXPECT_EQ(isShadowed(theWorld, t.point), t.want);
+  }
+  
+}
+
+
+TEST(TestWorld, ShadeHitWithShadow){ 
+ 
+  Ray ray = Ray{point(0,0,5), vector(0,0,1)};
+  Light light = Light(std::array<float, 3>{0,0,-10}, std::array<float, 3>{1, 1, 1});
+
+  std::shared_ptr<Sphere> s2 (new Sphere());
+  s2->setTransform(Matrix::translate(0,0,10));
+
+  std::shared_ptr<Sphere>s1 (new Sphere());
+
+  // std::vector<std::shared_ptr<Shape>> shapes, Light light
+  World theWorld = World({s1, s2}, light);
+
+  Intersection i = Intersection{4, s2.get()};
+  
+  EXPECT_EQ(shadeHit(theWorld, Computations{ray, i}), Color(0.1, 0.1, 0.1));
   
 }

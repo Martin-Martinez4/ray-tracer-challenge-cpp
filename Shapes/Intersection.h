@@ -29,7 +29,7 @@ struct Computations {
   Tuple point;
   Tuple eyeV;
   Tuple normalV;
-  //Tuple overPoint;
+  Tuple overPoint;
   //Tuple underPoint;
   //Tuple reflectV;
   bool inside;

@@ -3,6 +3,7 @@
 #include "Sphere.h"
 #include <array>
 #include <cstddef>
+#include "Tuple.h"
 #include <iostream>
 #include <memory>
 
@@ -17,14 +18,33 @@ World createDefaultWorld(){
   std::shared_ptr<Shape> sphere2 (new Sphere());
   sphere2->setTransform(Matrix::scale(0.5, 0.5, 0.5));
 
-  Light light = Light(std::array<float, 3>{-10,-10,-10}, std::array<float, 3>{1,1,1});
+  Light light = Light(std::array<float, 3>{-10, 10,-10}, std::array<float, 3>{1,1,1});
 
   return World(std::vector<std::shared_ptr<Shape>>{std::move(sphere1), std::move(sphere2)}, light);
 }
 
+bool isShadowed(World world, Tuple point){
+  Tuple v = world.light.position - point;
+  float distance = v.magnitude();
+  Tuple direction = normalize(v);
+
+  Ray r = Ray{point, direction};
+
+  std::shared_ptr<Intersections> xs = rayWorldIntersect(r, world);
+
+  Intersection* h = xs->hit();
+
+  if(h != nullptr && h->t < distance){
+    return true;
+  }
+  return false;
+
+}
+
 Color shadeHit(World world, Computations comps){
+  bool shadowed = isShadowed(world, comps.overPoint);
   
-  return lighting(comps.object->getMaterial(), world.light, comps.point, comps.eyeV, comps.normalV, false);
+  return lighting(comps.object->getMaterial(), world.light, comps.overPoint, comps.eyeV, comps.normalV, shadowed);
 }
 
 std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world){

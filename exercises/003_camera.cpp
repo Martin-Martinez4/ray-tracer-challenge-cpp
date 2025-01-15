@@ -22,7 +22,7 @@ Canvas Ex003(){
 
   std::shared_ptr<Shape> leftWall (new Sphere());
   leftWall->setTransforms({
-    Matrix::scale(10, .01f, 10), 
+    Matrix::scale(10, .15f, 10), 
     Matrix::rotationAlongX(M_PI_2_F),
     Matrix::rotationAlongY(-M_PI_4_F), 
     Matrix::translate(0, 0, 5),
@@ -31,7 +31,7 @@ Canvas Ex003(){
   
   std::shared_ptr<Shape> rightWall (new Sphere());
   rightWall->setTransforms({
-    Matrix::scale(10.f, .01f, 10.f), 
+    Matrix::scale(10.f, .15f, 10.f), 
     Matrix::rotationAlongX(M_PI_F / 2),
     Matrix::rotationAlongY(M_PI_F / 4),
     Matrix::translate(0, 0, 5),

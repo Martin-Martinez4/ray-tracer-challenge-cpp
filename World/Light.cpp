@@ -36,6 +36,10 @@ Color lighting(Material material, Light light, Tuple point, Tuple eyeVec, Tuple 
       specular = light.intensity * material.specular * factor;
     }
   }
+
+  if(inShadow){
+    return ambient;
+  }
   return ambient.add(diffuse.add(specular));
 }
 

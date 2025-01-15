@@ -48,3 +48,17 @@ TEST(IntersectionTest, PrepareComputations){
   }
     
 }
+
+
+TEST(IntersectionTest, OverPointWithinRange){
+  
+  Ray ray = Ray{point(0,0,-5), vector(0,0,1)};
+  Sphere theSphere = Sphere();
+  theSphere.setTransform(Matrix::translate(0,0,1));
+  Intersection i = Intersection{5, &theSphere};
+
+  Computations comps = Computations{ray, i};
+
+  EXPECT_TRUE((comps.overPoint.z < -EPSILON/2) && (comps.point.z > comps.overPoint.z));
+    
+}
