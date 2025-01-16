@@ -1,25 +1,21 @@
-#ifndef SHAPES_PLANE_H_
-#define SHAPES_PLANE_H_
 
-#include "Shape.h"
+#include "Floats.h"
+#include "Intersection.h"
+#include "Ray.h"
 #include "Tuple.h"
-#include <memory>
-
-struct Intersections;
-
-class Plane: public Shape{
-public:
-  Plane(): Shape(){};
-  Plane(Material mat): Shape(mat){};
-  
-  std::shared_ptr<Intersections> localIntersect(Ray ray);
-
-  Tuple normalAt(Tuple worldPoint) override;
-  std::shared_ptr<Intersections> intersect(Ray ray) override;
-  
-private:
-
-};
+#include <cmath>
+#include "Plane.h"
 
 
-#endif // !SHAPES_SPHERE_H_
+std::shared_ptr<Intersections> Plane::localIntersect(Ray ray){
+  if(std::fabs(ray.direction.y) < EPSILON){
+    return std::shared_ptr<Intersections>{};
+  }
+  std::shared_ptr<Intersections>inters (new Intersections);
+  inters->add(Intersection{(-ray.origin.y / ray.direction.y), this});
+  return inters;
+}
+
+Tuple Plane::normalAt(Tuple const & worldPoint, Intersection const* intersection){
+  return vector(0, 1, 0);
+}

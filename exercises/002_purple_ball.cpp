@@ -31,7 +31,7 @@ std::clog << "Start \n";
   violet.setColor(color2);
   violet.setTransforms({
     Matrix::scale(1, 0.5f, 1),
-    Matrix::rotationAlongY(M_PI_2)
+    Matrix::rotationAlongY(M_PI_2_F)
   });
 
   
@@ -59,7 +59,7 @@ std::clog << "Start \n";
 
         if(found != nullptr){
           Tuple point =  r.position(found->t);
-          Tuple normal = found->s->normalAt(point);
+          Tuple normal = found->s->normalAt(point, found);
           Tuple eye = r.direction.negate();
 
           Color color = lighting(found->s->getMaterial(), light, point, eye, normal, false);

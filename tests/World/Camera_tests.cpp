@@ -6,6 +6,7 @@
 #include <gtest/gtest.h>
 #include <string>
 #include <vector>
+#include <cmath>
 #include "Constants.h"
 
 TEST(CameraTest, PixelSize){
@@ -20,11 +21,11 @@ TEST(CameraTest, PixelSize){
   const size_t numTests = 2;
     test tests[numTests] = {
     {
-      Camera{200, 125, M_PI_2},
+      Camera{200, 125, M_PI_2_F},
       0.01f
     },
     {
-      Camera{125, 200, M_PI_2},
+      Camera{125, 200, M_PI_2_F},
       0.01
     },
   
@@ -61,21 +62,21 @@ TEST(CameraTest, RayForPixel){
   const size_t numTests = 3;
     test tests[numTests] = {
     {
-      Camera{201, 101, M_PI_2},
+      Camera{201, 101, M_PI_2_F},
       100,
       50,
       {},
       Ray{std::array<float, 3>{0,0,0}, std::array<float, 3>{0,0,-1}}
     },
     {
-      Camera{201, 101, M_PI_2},
+      Camera{201, 101, M_PI_2_F},
       0,
       0,
       {},
       Ray{std::array<float, 3>{0,0,0}, std::array<float, 3>{0.66519f, 0.33259f, -0.66851f}}
     },
     {
-      Camera{201, 101, M_PI_2},
+      Camera{201, 101, M_PI_2_F},
       100,
       50,
       {{transformName::rotation_y, {M_PI_4_F}}, {transformName::translate, {0, -2, 5}}},

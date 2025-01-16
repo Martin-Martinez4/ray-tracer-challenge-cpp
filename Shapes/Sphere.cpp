@@ -5,7 +5,7 @@
 #include "Sphere.h"
 #include <cmath>
 
-Tuple Sphere::normalAt(Tuple worldPoint) {
+Tuple Sphere::normalAt(Tuple const & worldPoint, Intersection const* intersection) {
   
   Tuple objectPoint = tupleMultiply(getInverseTransform(), worldPoint);
   Tuple objectNormal = objectPoint - point(0,0,0);
@@ -13,6 +13,10 @@ Tuple Sphere::normalAt(Tuple worldPoint) {
   worldNormal.w = 0;
   // Tuple wp = worldPoint.subtractTuple(point(0,0,0));
   return normalize(worldNormal);
+}
+
+Tuple Sphere::normalAt(Tuple const& worldPoint){
+  return normalAt(worldPoint, nullptr);
 }
 
 std::shared_ptr<Intersections> Sphere::localIntersect(Ray ray){

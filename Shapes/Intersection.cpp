@@ -17,7 +17,7 @@ Computations::Computations(Ray ray, Intersection intersection){
   point = ray.position(intersection.t);
   eyeV = ray.direction.negate();
   Tuple temp = ray.position(intersection.t);
-  normalV = object->normalAt(temp);
+  normalV = object->normalAt(temp, &intersection);
 
   overPoint = point + normalV * EPSILON;
 

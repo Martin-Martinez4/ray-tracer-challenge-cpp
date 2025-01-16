@@ -25,6 +25,7 @@ set(sources ${sources}
   ${CMAKE_CURRENT_SOURCE_DIR}/Parse/PPM.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Shape.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Plane.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Sphere.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Intersection.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Ray.cpp
@@ -41,6 +42,7 @@ set(exsources
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/001_red_circle.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/002_purple_ball.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/003_camera.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/exercises/004_plane.cpp
 )
 
 add_executable(
