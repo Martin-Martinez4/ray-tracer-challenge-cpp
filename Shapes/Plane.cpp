@@ -9,7 +9,7 @@
 
 std::shared_ptr<Intersections> Plane::localIntersect(Ray ray){
   if(std::fabs(ray.direction.y) < EPSILON){
-    return std::shared_ptr<Intersections>{};
+    return std::shared_ptr<Intersections>(new Intersections());
   }
   std::shared_ptr<Intersections>inters (new Intersections);
   inters->add(Intersection{(-ray.origin.y / ray.direction.y), this});
@@ -18,4 +18,7 @@ std::shared_ptr<Intersections> Plane::localIntersect(Ray ray){
 
 Tuple Plane::normalAt(Tuple const & worldPoint, Intersection const* intersection){
   return vector(0, 1, 0);
+}
+Tuple Plane::normalAt(Tuple const& worldPoint){
+  return normalAt(worldPoint, nullptr);
 }

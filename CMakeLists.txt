@@ -91,6 +91,7 @@ set(test_sources ${test_sources}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Parse/PPM_test.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Intersection_test.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Plane_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Sphere_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Ray_test.cpp
 

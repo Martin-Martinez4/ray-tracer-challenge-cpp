@@ -27,22 +27,12 @@ Canvas Ex004(){
   
   });
   */
-  Material wallMat = Material(Color(1, 1, .5));
+  Material wallMat = Material(Color(.5, .25, .2));
   std::shared_ptr<Shape> wall (new Plane(wallMat));
   wall->setTransforms({
-    Matrix::rotationAlongY(M_PI),
+    Matrix::rotationAlongY(-M_PI_4),
     Matrix::rotationAlongZ(M_PI_2),
-    Matrix::translate(2.5, 0, 0)
-  
-  });
-
-  Material wallMat2 = Material(Color(1, 1, .5));
-  std::shared_ptr<Shape> wall2 (new Plane(wallMat2));
-  wall2->setTransforms({
-    Matrix::translate(0, -2, 0),
-    Matrix::rotationAlongY(M_PI_2),
-    Matrix::rotationAlongX(-M_PI_2),
-    Matrix::translate(2, 0, 3)
+    Matrix::translate(2, 0, 2)
   
   });
 
@@ -69,9 +59,9 @@ Canvas Ex004(){
 
   Light l = Light(std::array<float, 3>{-10, 10, -10}, std::array<float, 3>{1, 1, 1});
   
-  World w = World({floor, middleSphere, rightSphere, leftSphere}, l);
+  World w = World({floor, wall, middleSphere, rightSphere, leftSphere}, l);
 
-  Camera camera = Camera(600, 300, M_PI/1.5);
+  Camera camera = Camera(600, 300, M_PI/3);
   camera.setTransform(Matrix::viewTransform(point(0,1.5,-5), point(0,1,0), vector(0,1,0)));
   
   return render(camera, w);

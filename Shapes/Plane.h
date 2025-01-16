@@ -16,7 +16,8 @@ public:
   
   std::shared_ptr<Intersections> localIntersect(Ray ray) override;
 
-  Tuple normalAt(Tuple const & worldPoint, Intersection const* intersection) override;
+  Tuple normalAt(Tuple const& worldPoint, Intersection const* intersection) override;
+  Tuple normalAt(Tuple const& worldPoint);
 
 
   
