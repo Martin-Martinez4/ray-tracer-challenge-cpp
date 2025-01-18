@@ -29,6 +29,8 @@ public:
   Material getMaterial();
   void setMaterial(Material m);
 
+  Color patternAtShape(Tuple worldPoint);
+
   std::shared_ptr<Intersections> intersect(Ray ray);
   virtual std::shared_ptr<Intersections> localIntersect(Ray ray) = 0;
   virtual Tuple normalAt(Tuple const & worldPoint, Intersection const* intersection) = 0;

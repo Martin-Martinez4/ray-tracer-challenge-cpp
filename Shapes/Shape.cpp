@@ -49,6 +49,12 @@ void Shape::setMaterial(Material m){
   material = m;
 }
 
+Color Shape::patternAtShape(Tuple worldPoint){
+  Tuple objectPoint = tupleMultiply(getInverseTransform(), worldPoint);
+  Tuple patternPoint = tupleMultiply(getMaterial().pattern->getInverseTransform(), objectPoint);
+  return getMaterial().pattern->patternAt(patternPoint);
+}
+
 std::shared_ptr<Intersections> Shape::intersect(Ray ray){
   return localIntersect(ray.transform(getInverseTransform()));
 }

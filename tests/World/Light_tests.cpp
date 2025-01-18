@@ -1,8 +1,8 @@
 
-#include "Material.h"
 #include "Tuple.h"
 #include "Light.h"
 #include "Color.h"
+#include "Sphere.h"
 #include <cmath>
 #include <array>
 #include <gtest/gtest.h>
@@ -64,8 +64,10 @@ TEST(LightTest, LightingFunction){
     
   };
 
+  Sphere s = Sphere();
+
   for(size_t i = 0; i < numTests; ++i){
     test t = tests[i];
-    EXPECT_EQ(lighting(t.m, t.light, p, t.eyeVec, t.normalVec, false), t.want);
+    EXPECT_EQ(lighting(t.m, &s, t.light, p, t.eyeVec, t.normalVec, false), t.want);
   }
 }

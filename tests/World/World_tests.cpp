@@ -5,6 +5,7 @@
 #include "Intersection.h"
 #include "Ray.h"
 #include "Shape.h"
+#include "Sphere.h"
 #include "Tuple.h"
 #include "Light.h"
 #include "Color.h"
@@ -73,9 +74,11 @@ TEST(TestWorld, IntersectWorld){
     
   };
 
+  Sphere s = Sphere();
+
   for(size_t i = 0; i < numTests; ++i){
     test t = tests[i];
-    EXPECT_EQ(lighting(t.m, t.light, p, t.eyeVec, t.normalVec, false), t.want);
+    EXPECT_EQ(lighting(t.m, &s, t.light, p, t.eyeVec, t.normalVec, false), t.want);
   }
 }
 

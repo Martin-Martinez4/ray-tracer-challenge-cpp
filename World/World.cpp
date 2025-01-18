@@ -44,7 +44,7 @@ bool isShadowed(World world, Tuple point){
 Color shadeHit(World world, Computations comps){
   bool shadowed = isShadowed(world, comps.overPoint);
   
-  return lighting(comps.object->getMaterial(), world.light, comps.overPoint, comps.eyeV, comps.normalV, shadowed);
+  return lighting(comps.object->getMaterial(), comps.object, world.light, comps.overPoint, comps.eyeV, comps.normalV, shadowed);
 }
 
 std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world){

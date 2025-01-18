@@ -1,10 +1,19 @@
 #include "Light.h"
-#include "Material.h"
 #include <cmath>
 #include <iostream>
 #include "Color.h"
 
-Color lighting(Material material, Light light, Tuple point, Tuple eyeVec, Tuple normalVec, bool inShadow){
+Color lighting(Material material, Shape* shape, Light light, Tuple point, Tuple eyeVec, Tuple normalVec, bool inShadow){
+
+  Color color;
+
+  if(shape->getMaterial().pattern == nullptr){
+    color = material.color;
+    
+  }else{
+    color = shape->patternAtShape(point);
+  }
+
 
   Color effectiveColor = material.color.multiply(light.intensity);
   

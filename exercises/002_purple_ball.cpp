@@ -62,7 +62,7 @@ std::clog << "Start \n";
           Tuple normal = found->s->normalAt(point, found);
           Tuple eye = r.direction.negate();
 
-          Color color = lighting(found->s->getMaterial(), light, point, eye, normal, false);
+          Color color = lighting(found->s->getMaterial(), found->s, light, point, eye, normal, false);
 
           canvas.setPixel(x, y, color);
         }

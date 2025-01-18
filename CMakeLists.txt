@@ -17,6 +17,11 @@ set(sources ${sources}
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Color.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Material.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Pattern.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Stripes.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Gradient.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Checker.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Materials/Ring.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Math/Tuple.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Math/Floats.cpp
@@ -87,6 +92,8 @@ set(test_sources ${test_sources}
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Tuple_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Floats_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Math/Matrix_tests.cpp
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/Materials/Pattern_tests.cpp
   
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Parse/PPM_test.cpp
 

@@ -2,6 +2,7 @@
 #define WORLD_LIGHT_H_
 
 #include "Tuple.h"
+#include "Shape.h"
 #include "Color.h"
 #include <array>
 
@@ -16,6 +17,6 @@ struct Light {
   Tuple position;
 };
 
-Color lighting(Material material, Light light, Tuple point, Tuple eyeVec, Tuple normalVec, bool inShadow);
+Color lighting(Material material, Shape* shape, Light light, Tuple point, Tuple eyeVec, Tuple normalVec, bool inShadow);
 
 #endif
