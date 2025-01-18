@@ -48,6 +48,7 @@ set(exsources
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/002_purple_ball.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/003_camera.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/004_plane.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/exercises/005_patterns.cpp
 )
 
 add_executable(

@@ -1,4 +1,4 @@
-
+ 
 #include "exercises.h"
 #include "PPM.h"
 #include <fstream>
@@ -6,8 +6,8 @@
 int main(){
 
 
-  std::ofstream out("output/Ex004-s.ppm");
-  out << ppm(Ex004());
+  std::ofstream out("output/Ex005-a.ppm");
+  out << ppm(Ex005());
   out.close();
 
   

@@ -1,7 +1,7 @@
 #include "Stripes.h"
 #include "Pattern.h"
 #include <cmath>
-
+#include <iostream>
 
 Stripes::Stripes():Pattern(){};
 Stripes::Stripes(Color color1):Pattern(color1){};

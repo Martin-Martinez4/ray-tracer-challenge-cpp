@@ -15,7 +15,7 @@ Color lighting(Material material, Shape* shape, Light light, Tuple point, Tuple 
   }
 
 
-  Color effectiveColor = material.color.multiply(light.intensity);
+  Color effectiveColor = color * light.intensity;
   
   Tuple temp = light.position - point;
   Tuple lightVec = normalize(temp);

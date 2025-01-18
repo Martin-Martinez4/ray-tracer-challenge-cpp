@@ -5,5 +5,6 @@
 #include "002_purple_ball.h"
 #include "003_camera.h"
 #include "004_plane.h"
+#include "005_patterns.h"
 
 #endif
