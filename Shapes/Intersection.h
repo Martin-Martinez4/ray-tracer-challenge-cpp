@@ -9,47 +9,24 @@
 
 class Shape;
 struct Ray;
+class Intersections;
 
 struct Intersection{
   float t;
   Shape* s;
+
+  bool operator==(Intersection const& other) const {
+    return (t == other.t && s == other.s);
+  }
 };
 
 struct IntersectionUV: public Intersection{
   float u;
   float v;
-};
 
-struct Computations {
-  Computations(Ray ray, Intersection intersection);
-  Computations(float t, Shape* object, Tuple point, Tuple eyeV, Tuple normalV, bool inside): t{t}, object{object}, point{point}, eyeV{eyeV}, normalV(normalV), inside{inside}{};
-
-  float t;
-  Shape* object;
-  Tuple point;
-  Tuple eyeV;
-  Tuple normalV;
-  Tuple overPoint;
-  //Tuple underPoint;
-  //Tuple reflectV;
-  bool inside;
-  //float n1;
-  //float n2;
-  
-  bool operator==(Computations const & other) const{
-    return (
-      floatsEqual(t, other.t) &&
-      object == other.object &&
-      point == other.point &&
-      eyeV == other.eyeV &&
-      normalV == other.normalV &&
-      inside == other.inside
-    );
+  bool operator==(Intersection const& other) const {
+    return (t == other.t && s == other.s);
   }
-
-   
-  friend std::ostream& operator<<(std::ostream &os, const Computations& c);
-
 };
 
 class Intersections {
@@ -76,6 +53,38 @@ public:
 
 private:
   std::vector<Intersection> inters;
+
+};
+
+struct Computations {
+  Computations(Ray ray, Intersection intersection, std::shared_ptr<Intersections> xs = std::shared_ptr<Intersections>(new Intersections()));
+  Computations(float t, Shape* object, Tuple point, Tuple eyeV, Tuple normalV, bool inside): t{t}, object{object}, point{point}, eyeV{eyeV}, normalV(normalV), inside{inside}{};
+
+  float t;
+  Shape* object;
+  Tuple point;
+  Tuple eyeV;
+  Tuple normalV;
+  Tuple overPoint;
+  Tuple underPoint;
+  Tuple reflectV;
+  bool inside;
+  float n1;
+  float n2;
+  
+  bool operator==(Computations const & other) const{
+    return (
+      floatsEqual(t, other.t) &&
+      object == other.object &&
+      point == other.point &&
+      eyeV == other.eyeV &&
+      normalV == other.normalV &&
+      inside == other.inside
+    );
+  }
+
+   
+  friend std::ostream& operator<<(std::ostream &os, const Computations& c);
 
 };
 

@@ -1,4 +1,5 @@
 #include "World.h"
+#include "Floats.h"
 #include "Ray.h"
 #include "Sphere.h"
 #include <array>
@@ -6,7 +7,11 @@
 #include "Tuple.h"
 #include <iostream>
 #include <memory>
+#include <cmath>
 
+void World::addShape(std::shared_ptr<Shape> shape_p){
+ shapes.push_back(shape_p); 
+}
 World createDefaultWorld(){
   Material mat1 = Material();
   mat1.diffuse = 0.7f;
@@ -41,10 +46,46 @@ bool isShadowed(World world, Tuple point){
 
 }
 
-Color shadeHit(World world, Computations comps){
+Color shadeHit(World world, Computations comps, int reflectionsLeft){
   bool shadowed = isShadowed(world, comps.overPoint);
   
-  return lighting(comps.object->getMaterial(), comps.object, world.light, comps.overPoint, comps.eyeV, comps.normalV, shadowed);
+  Color surface = lighting(comps.object->getMaterial(), comps.object, world.light, comps.overPoint, comps.eyeV, comps.normalV, shadowed);
+  Color reflected = reflectedColor(world, comps, reflectionsLeft);
+  Color refracted = refractedColor(world, comps, reflectionsLeft);
+
+  Material mat = comps.object->getMaterial();
+  float reflectance = 0.f;
+
+  if(mat.reflective > 0 && mat.transparency > 0){
+    reflectance = schlick(comps);
+    
+    reflected = reflected * reflectance;
+    refracted = refracted * (1-reflectance);
+  }
+
+  return surface + reflected + refracted; 
+}
+
+float schlick(Computations& computations){
+  float n1 = computations.n1;
+  float n2 = computations.n2;
+
+  float cos = computations.eyeV.dot(computations.normalV);
+  
+  if(n1 > n2){
+    float n = n1 / n2;
+    float sin2t = (n * n) * (1 - (cos * cos));
+    if(sin2t > 1){
+      return 1.0f;
+    }
+
+    float cosT = sqrtf(1- sin2t);
+    cos = cosT;
+  }
+
+  float r0 = powf(( (n1 - n2)/(n1 + n2) ), 2);
+  return r0 + (1-r0) * powf((1-cos), 5);
+
 }
 
 std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world){
@@ -65,9 +106,44 @@ Color colorAt(Ray ray, World world, int reflectionsLeft){
   if(intersection == nullptr){
     return Color(0,0,0);
   }else{
-    return shadeHit(world, Computations(ray, *intersection));
+    return shadeHit(world, Computations(ray, *intersection), reflectionsLeft);
   }
 
+}
+
+Color reflectedColor(World world, Computations computations, int reflectionsLeft){
+  if(computations.object->getMaterial().reflective < EPSILON || reflectionsLeft <= 0){
+    return Color(0,0,0);
+  }else{
+    Ray reflectRay =Ray(computations.underPoint, computations.reflectV);
+    Color color = colorAt(reflectRay, world, reflectionsLeft-1);
+
+    return color * computations.object->getMaterial().reflective;
+  }
+}
+
+Color refractedColor(World world, Computations computations, int reflectionsLeft){
+  if(computations.object->getMaterial().transparency == 0 || reflectionsLeft <= 0){
+    return Color(0,0,0);
+  }
+
+  float nRatio = computations.n1 / computations.n2;
+  float cosI = computations.eyeV.dot(computations.normalV);
+  float sin2T = (nRatio * nRatio) * (1 - (cosI * cosI));
+
+  if(sin2T > 1){
+    return Color(0,0,0);
+  }
+
+  float cosT = sqrtf(1.0 - sin2T);
+
+  Tuple d1 = computations.normalV * (nRatio * cosI - cosT);
+  Tuple d2 = computations.eyeV * nRatio;
+  Tuple direction = d1 - d2;
+
+  Ray refractRay = Ray{computations.underPoint, direction};
+
+  return colorAt(refractRay, world, reflectionsLeft - 1) * computations.object->getMaterial().transparency;
 }
 
 Canvas render(Camera camera, World world){

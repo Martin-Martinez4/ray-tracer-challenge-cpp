@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Canvas.h"
 #include "Intersection.h"
+#include "Plane.h"
 #include "Ray.h"
 #include "Shape.h"
 #include "Sphere.h"
@@ -160,7 +161,7 @@ TEST(TestWorld, ShadeHit){
       theOtherWorld,
       Intersection{0.5f, theOtherWorld.shapes[1].get()},
       // Color(0.90498f, 0.90498f, 0.90498f)
-      Color(0.1f, 0.1f, 0.1f)
+      Color(0.904956f, 0.904956f, 0.904956f)
     },
     
   };
@@ -170,7 +171,7 @@ TEST(TestWorld, ShadeHit){
 
     Computations c = Computations(t.ray, t.intersection);
   
-    EXPECT_EQ(shadeHit(t.world, c), t.want);
+    EXPECT_EQ(shadeHit(t.world, c, 0), t.want);
   }
   
 }
@@ -231,6 +232,86 @@ TEST(TestWorld, ShadeHitWithShadow){
 
   Intersection i = Intersection{4, s2.get()};
   
-  EXPECT_EQ(shadeHit(theWorld, Computations{ray, i}), Color(0.1, 0.1, 0.1));
+  EXPECT_EQ(shadeHit(theWorld, Computations{ray, i}, 0), Color(0.1, 0.1, 0.1));
+  
+}
+
+TEST(TestWorld, Reflection){ 
+
+  // ReflectionV
+  Plane plane1 = Plane();
+  Ray ray1 = Ray{point(0, 1, -1), vector(0, -sqrtf(2)/2, sqrtf(2)/2)};
+  Intersection inter1 = Intersection{sqrtf(2), &plane1};
+
+  Computations comps1 = Computations{ray1, inter1};
+  EXPECT_EQ(comps1.reflectV, vector(0, sqrtf(2)/2, sqrtf(2)/2)) << "Test 1 refelctionV failed: \n";
+
+  // non-reflective Material
+  World w2 = createDefaultWorld();
+  Material mat2 = Material();
+  mat2.ambient = 1;
+  w2.shapes[1]->setMaterial(mat2);
+  Intersection inter2 = Intersection{sqrtf(2), w2.shapes[1].get()};
+  Ray ray2 = Ray{point(0,1,-1), vector(0, -sqrtf(2)/2, sqrtf(2)/2)};
+  Computations comps2 = Computations{ray2, inter2};
+
+  EXPECT_EQ(reflectedColor(w2, comps2, 1), Color(0,0,0)) << "Test 2 non-reflective failed: \n";
+
+  // reflective material
+  World w3 = createDefaultWorld();
+  Material mat3 = Material();
+  mat3.reflective = 0.5;
+  Plane plane3 = Plane(mat3);
+  plane3.setTransform(Matrix::translate(0, -1, 0));
+  Ray ray3 = Ray{point(0,0,-3), vector(0, -sqrtf(2)/2, sqrtf(2)/2)};
+  Intersection inter3 = Intersection{sqrtf(2), &plane3};
+  Computations comps3 = Computations(ray3, inter3);
+  Color reflected3 = reflectedColor(w3, comps3, 1);
+
+  EXPECT_EQ(reflected3, Color(0.19032f, 0.2379f, 0.14277f)) << "Test 3 refelctive material failed: \n";
+
+
+
+  // reflective Material, zero reflections
+  World w5 = createDefaultWorld();
+  Material mat5 = Material();
+  mat5.reflective = 0.5;
+  Plane plane5 = Plane(mat5);
+  plane5.setTransform(Matrix::translate(0, -1, 0));
+  Intersection inter5 = Intersection{sqrtf(2), &plane5};
+  Ray ray5 = Ray{point(0,0,-3), vector(0, sqrtf(2)/2, sqrtf(2)/2)};
+  Computations comps5 = Computations{ray5, inter5};
+
+  EXPECT_EQ(reflectedColor(w5, comps5, 0), Color(0,0,0));
+}
+
+TEST(TestWorld, SchlickReflectionAndRefraction){ 
+  
+  Ray ray = Ray{point(0,0,-3), vector(0, -sqrtf(2)/2, sqrtf(2)/2)};
+  World w = createDefaultWorld();
+
+  Material floorMat = Material();
+  floorMat.reflective = 0.5f;
+  floorMat.transparency = 0.5f;
+  floorMat.refractiveIndex = 1.5f;
+
+  std::shared_ptr<Shape> floor (new Plane(floorMat));
+  floor->setTransform(Matrix::translate(0, -1, 0));
+
+  Material sMat = Material(Color(1,0,0));
+  sMat.ambient = 0.5f;
+  
+  std::shared_ptr<Shape> s (new Sphere(sMat));
+  s->setTransform(Matrix::translate(0, -3.5, -0.5));
+
+  w.addShape(floor);
+  w.addShape(s);
+
+  Intersection inter = Intersection{sqrtf(2), floor.get()};
+  std::shared_ptr<Intersections> inters (new Intersections{{inter}});
+
+  Computations comps = Computations{ray, inter, inters};
+
+  EXPECT_EQ(shadeHit(w, comps, 5), Color(0.93391f, 0.69643f, 0.69243f));
   
 }

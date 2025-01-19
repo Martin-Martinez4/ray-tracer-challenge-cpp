@@ -12,6 +12,8 @@
 
 struct World{
   World(std::vector<std::shared_ptr<Shape>> shapes, Light light):shapes{std::move(shapes)}, light{light}{};
+
+  void addShape(std::shared_ptr<Shape> shape_p);
   
   std::vector<std::shared_ptr<Shape>> shapes;
   Light light;
@@ -22,11 +24,16 @@ World createDefaultWorld();
 std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world);
 
 bool isShadowed(World world, Tuple point);
-Color shadeHit(World world, Computations comps);
+Color shadeHit(World world, Computations comps, int reflectionsLeft);
+
+float schlick(Computations& computations);
 
 std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world); 
 
 Color colorAt(Ray ray, World world, int reflectionsLeft);
+
+Color reflectedColor(World world, Computations computations, int reflectionsLeft);
+Color refractedColor(World world, Computations computations, int reflectionsLeft);
 
 Canvas render(Camera camera, World world);
 

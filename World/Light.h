@@ -1,6 +1,7 @@
 #ifndef WORLD_LIGHT_H_
 #define WORLD_LIGHT_H_
 
+#include "Intersection.h"
 #include "Tuple.h"
 #include "Shape.h"
 #include "Color.h"
@@ -18,5 +19,6 @@ struct Light {
 };
 
 Color lighting(Material material, Shape* shape, Light light, Tuple point, Tuple eyeVec, Tuple normalVec, bool inShadow);
+
 
 #endif

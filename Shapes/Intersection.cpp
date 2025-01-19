@@ -1,5 +1,6 @@
 
 #include "Intersection.h"
+#include "Floats.h"
 #include "Ray.h"
 #include <cstddef>
 #include <memory>
@@ -11,7 +12,7 @@ class Shape;
 
 
 
-Computations::Computations(Ray ray, Intersection intersection){
+Computations::Computations(Ray ray, Intersection intersection, std::shared_ptr<Intersections> xs){
   t = intersection.t; 
   object = intersection.s;
   point = ray.position(intersection.t);
@@ -19,7 +20,6 @@ Computations::Computations(Ray ray, Intersection intersection){
   Tuple temp = ray.position(intersection.t);
   normalV = object->normalAt(temp, &intersection);
 
-  overPoint = point + normalV * EPSILON;
 
   if(normalV.dot(eyeV) < 0){
     inside = true;
@@ -27,11 +27,64 @@ Computations::Computations(Ray ray, Intersection intersection){
   }else{
     inside = false;
   }
+  
+  
+  Tuple nvEp = normalV * EPSILON;
+  reflectV = ray.direction.reflectBy(normalV);
+
+  overPoint = point + nvEp;
+  underPoint = point - nvEp;
+
+  std::vector<const void *> intersected_objects;
+  // Possible optimization: Capture exited material in merge step of intersections.
+  for (std::size_t i = 0; i < xs->size(); ++i) {
+    Intersection x = xs->get(i);
+    if (intersection == x) {
+      if (intersected_objects.empty()) {
+        n1 = 1.0f;
+      } else {
+        Shape *s = (Shape *)intersected_objects[intersected_objects.size() - 1];
+        n1 = s->getMaterial().refractiveIndex;
+      }
+    }
+
+    std::vector<const void *>::iterator it
+      = std::find(intersected_objects.begin(), intersected_objects.end(), x.s);
+    if (it != intersected_objects.end()) {
+      intersected_objects.erase(it);
+    } else {
+      intersected_objects.push_back(x.s);
+    }
+
+    if (intersection == x) {
+      if (intersected_objects.empty()) {
+        n2 = 1.0f;
+      } else {
+        Shape *s = (Shape *)intersected_objects[intersected_objects.size() - 1];
+        n2 = s->getMaterial().refractiveIndex;
+      }
+      return;
+    }
+  }
+
+
+
 }
 
 
 std::ostream& operator<<(std::ostream &os, const Computations& c){
- return os << "t: " << c.t << " " << "object: " << c.object << " " << "point: " << c.point << " " << "eyeV: " << c.eyeV << " " << "normalV: " << c.normalV << " " << "inside: " << c.inside << " ";  
+ return os 
+  << "t: " << c.t << "\n" 
+  << "object: " << c.object << "\n" 
+  << "point: " << c.point << "\n" 
+  << "eyeV: " << c.eyeV << "\n" 
+  << "normalV: " << c.normalV << "\n" 
+  << "overPoint: " << c.overPoint << "\n"
+  << "underPoint: " << c.underPoint << "\n"
+  << "inside: " << c.inside << "\n"
+  << "refelctV: " << c.reflectV << "\n" 
+  << "n1: " << c.n1 << "\n" 
+  << "n2: " << c.n2 << "\n";  
 }
 
 

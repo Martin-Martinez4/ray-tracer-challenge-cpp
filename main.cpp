@@ -6,8 +6,8 @@
 int main(){
 
 
-  std::ofstream out("output/Ex005-a.ppm");
-  out << ppm(Ex005());
+  std::ofstream out("output/Ex006.ppm");
+  out << ppm(Ex006());
   out.close();
 
   

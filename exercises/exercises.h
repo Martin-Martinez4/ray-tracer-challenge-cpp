@@ -6,5 +6,6 @@
 #include "003_camera.h"
 #include "004_plane.h"
 #include "005_patterns.h"
+#include "006_glass.h"
 
 #endif
