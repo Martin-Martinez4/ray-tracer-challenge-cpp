@@ -35,32 +35,32 @@ Computations::Computations(Ray ray, Intersection intersection, std::shared_ptr<I
   overPoint = point + nvEp;
   underPoint = point - nvEp;
 
-  std::vector<const void *> intersected_objects;
-  // Possible optimization: Capture exited material in merge step of intersections.
+  std::vector<const void *> container;
+  
   for (std::size_t i = 0; i < xs->size(); ++i) {
     Intersection x = xs->get(i);
     if (intersection == x) {
-      if (intersected_objects.empty()) {
+      if (container.size() == 0) {
         n1 = 1.0f;
       } else {
-        Shape *s = (Shape *)intersected_objects[intersected_objects.size() - 1];
+        Shape *s = (Shape *)container.back();
         n1 = s->getMaterial().refractiveIndex;
       }
     }
 
     std::vector<const void *>::iterator it
-      = std::find(intersected_objects.begin(), intersected_objects.end(), x.s);
-    if (it != intersected_objects.end()) {
-      intersected_objects.erase(it);
+      = std::find(container.begin(), container.end(), x.s);
+    if (it != container.end()) {
+      container.erase(it);
     } else {
-      intersected_objects.push_back(x.s);
+      container.push_back(x.s);
     }
 
     if (intersection == x) {
-      if (intersected_objects.empty()) {
+      if (container.size() == 0) {
         n2 = 1.0f;
       } else {
-        Shape *s = (Shape *)intersected_objects[intersected_objects.size() - 1];
+        Shape *s = (Shape *)container.back();
         n2 = s->getMaterial().refractiveIndex;
       }
       return;

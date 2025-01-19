@@ -54,19 +54,20 @@ Color shadeHit(World world, Computations comps, int reflectionsLeft){
   Color refracted = refractedColor(world, comps, reflectionsLeft);
 
   Material mat = comps.object->getMaterial();
-  float reflectance = 0.f;
 
   if(mat.reflective > 0 && mat.transparency > 0){
-    reflectance = schlick(comps);
+    float reflectance = schlick(comps);
     
     reflected = reflected * reflectance;
     refracted = refracted * (1-reflectance);
   }
+  
+  
 
   return surface + reflected + refracted; 
 }
 
-float schlick(Computations& computations){
+float schlick(Computations computations){
   float n1 = computations.n1;
   float n2 = computations.n2;
 
@@ -75,6 +76,7 @@ float schlick(Computations& computations){
   if(n1 > n2){
     float n = n1 / n2;
     float sin2t = (n * n) * (1 - (cos * cos));
+  
     if(sin2t > 1){
       return 1.0f;
     }
@@ -106,7 +108,10 @@ Color colorAt(Ray ray, World world, int reflectionsLeft){
   if(intersection == nullptr){
     return Color(0,0,0);
   }else{
-    return shadeHit(world, Computations(ray, *intersection), reflectionsLeft);
+    //std::cout << "ray: " << ray << "\n";
+    //std::cout << "intersection " << intersection << "\n";
+    Computations c = Computations(ray, *intersection, inters);
+    return shadeHit(world, c, reflectionsLeft);
   }
 
 }
@@ -115,7 +120,7 @@ Color reflectedColor(World world, Computations computations, int reflectionsLeft
   if(computations.object->getMaterial().reflective < EPSILON || reflectionsLeft <= 0){
     return Color(0,0,0);
   }else{
-    Ray reflectRay =Ray(computations.underPoint, computations.reflectV);
+    Ray reflectRay =Ray(computations.overPoint, computations.reflectV);
     Color color = colorAt(reflectRay, world, reflectionsLeft-1);
 
     return color * computations.object->getMaterial().reflective;
@@ -137,11 +142,18 @@ Color refractedColor(World world, Computations computations, int reflectionsLeft
 
   float cosT = sqrtf(1.0 - sin2T);
 
-  Tuple d1 = computations.normalV * (nRatio * cosI - cosT);
+  Tuple d1 = computations.normalV * ((nRatio * cosI) - cosT);
   Tuple d2 = computations.eyeV * nRatio;
   Tuple direction = d1 - d2;
+  //std::cout << "== remaining " << reflectionsLeft << "==\n";
+  //std::cout << "comps: " << computations << "\n";
+  //std::cout << "d1: " << d1 << "\n";
+  //std::cout << "d2: " << d2 << "\n";
+  //std::cout << "direction: " << direction << "\n";
 
   Ray refractRay = Ray{computations.underPoint, direction};
+
+  //std::cout << "\nrefractedColor: " << (colorAt(refractRay, world, reflectionsLeft - 1) * computations.object->getMaterial().transparency) << "\n";
 
   return colorAt(refractRay, world, reflectionsLeft - 1) * computations.object->getMaterial().transparency;
 }
@@ -152,11 +164,23 @@ Canvas render(Camera camera, World world){
   
   for(size_t y = 0; y < camera.vSize-1; ++y){
     for(size_t x = 0; x < camera.hSize-1; ++x){
+    
       Ray ray = camera.rayForPixel(x, y);
-      Color c = colorAt(ray, world, 1);
+      Color c = colorAt(ray, world, 5);
       image.setPixel(x, y, c);
     }
   }
+
+  return image;
+}
+
+Canvas renderPixel(Camera camera, World world, size_t x, size_t y){
+
+  Canvas image = Canvas(camera.hSize, camera.vSize);
+
+  Ray ray = camera.rayForPixel(x, y);
+  Color c = colorAt(ray, world, 5);
+  image.setPixel(x, y, c);
 
   return image;
 }

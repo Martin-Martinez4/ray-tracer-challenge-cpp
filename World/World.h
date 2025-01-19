@@ -26,7 +26,7 @@ std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world);
 bool isShadowed(World world, Tuple point);
 Color shadeHit(World world, Computations comps, int reflectionsLeft);
 
-float schlick(Computations& computations);
+float schlick(Computations computations);
 
 std::shared_ptr<Intersections> rayWorldIntersect(Ray ray, World world); 
 
@@ -36,5 +36,6 @@ Color reflectedColor(World world, Computations computations, int reflectionsLeft
 Color refractedColor(World world, Computations computations, int reflectionsLeft);
 
 Canvas render(Camera camera, World world);
+Canvas renderPixel(Camera camera, World world, size_t x, size_t y);
 
 #endif // !WORLD_WORLD_H_

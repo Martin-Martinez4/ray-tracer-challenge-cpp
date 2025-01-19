@@ -15,6 +15,7 @@
 #include <array>
 #include <gtest/gtest.h>
 #include <iostream>
+#include <memory>
 #include "Constants.h"
 
 
@@ -231,8 +232,10 @@ TEST(TestWorld, ShadeHitWithShadow){
   World theWorld = World({s1, s2}, light);
 
   Intersection i = Intersection{4, s2.get()};
+
+  Computations c = Computations{ray, i};
   
-  EXPECT_EQ(shadeHit(theWorld, Computations{ray, i}, 0), Color(0.1, 0.1, 0.1));
+  EXPECT_EQ(shadeHit(theWorld, c, 0), Color(0.1, 0.1, 0.1));
   
 }
 
@@ -270,8 +273,6 @@ TEST(TestWorld, Reflection){
 
   EXPECT_EQ(reflected3, Color(0.19032f, 0.2379f, 0.14277f)) << "Test 3 refelctive material failed: \n";
 
-
-
   // reflective Material, zero reflections
   World w5 = createDefaultWorld();
   Material mat5 = Material();
@@ -283,8 +284,160 @@ TEST(TestWorld, Reflection){
   Computations comps5 = Computations{ray5, inter5};
 
   EXPECT_EQ(reflectedColor(w5, comps5, 0), Color(0,0,0));
+
+
+  // ------------ Reflective ShadeHit ------------
+  World w6 = createDefaultWorld();
+  
+  Material planeMat = Material();
+  planeMat.reflective = 0.5;
+
+  std::shared_ptr<Shape> plane6 (new Plane(planeMat));
+  plane6->setTransform(Matrix::translate(0, -1, 0));
+
+  Ray ray6 = Ray{point(0,0,-3), vector(0, -sqrtf(2)/2, sqrtf(2)/2)};
+
+  Intersection inter6 = Intersection{sqrtf(2), plane6.get()};
+
+  Computations comps6 = Computations{ray6, inter6};
+
+  EXPECT_EQ(shadeHit(w6, comps6, 1), Color(0.87677, 0.92436, 0.82918));
+
+  // ------------ Two Reflective Shapes ------------
+
 }
 
+TEST(TestWorld, Schlick){ 
+  
+  Ray ray = Ray{point(0,0,sqrtf(2)/2), vector(0, 1, 0)};
+  
+  Material m = Material();
+  m.transparency = 1;
+  m.refractiveIndex = 1.5;
+  std::shared_ptr<Shape> g (new Sphere(m));
+
+  Intersection inter = Intersection{-sqrtf(2)/2, g.get()};
+  Intersection inter1 = Intersection{sqrtf(2)/2, g.get()};
+  std::shared_ptr<Intersections> inters (new Intersections{{inter, inter1}});
+
+  Computations comps = Computations{ray, inter1, inters};
+
+  EXPECT_EQ(schlick(comps), 1.0f);
+
+  Ray ray1 = Ray{point(0,0,0), vector(0, 1, 0)};
+  std::shared_ptr<Intersections> inters1 (new Intersections{{
+    Intersection{-1, g.get()},
+    Intersection{1, g.get()}
+  }});
+
+  Computations comps1 = Computations(ray1, inters1->get(1), inters1);
+  EXPECT_FLOAT_EQ(schlick(comps1), 0.04) << "wanted: 0.04 \nschlick perpendicular failed";
+
+  Ray ray2 = Ray{point(0,0.99,-2), vector(0, 0, 1)};
+  std::shared_ptr<Intersections> inters2 (new Intersections{{
+    Intersection{1.8589, g.get()},
+  }});
+
+  Computations comps2 = Computations(ray2, inters2->get(0), inters2);
+  EXPECT_FLOAT_EQ(schlick(comps2), 0.4887307f) << "wanted: 0.48873 \nschlick small angle failed";
+  
+}
+
+
+TEST(TestWorld, Refraction){ 
+  // opaque color
+  World w0 = createDefaultWorld();
+  Ray ray0 = Ray{point(0,0,-5), vector(0,0,1)};
+  std::shared_ptr<Intersections> inters0 (new Intersections{
+    {
+      Intersection{4, w0.shapes[0].get()},
+      Intersection{6, w0.shapes[0].get()}
+    }
+  });
+
+  Computations comps0 = Computations{ray0, inters0->get(0), inters0};
+
+  EXPECT_EQ(refractedColor(w0, comps0, 5), Color(0,0,0));
+
+  // ------------ reflectionsLeft 0 ------------ 
+  World w1 = createDefaultWorld();
+  Ray ray1 = Ray{point(0,0,-5), vector(0,0,1)};
+  
+  Material mat1 = Material();
+  mat1.transparency = 1.0f;
+  mat1.refractiveIndex = 1.5f;
+ 
+  w1.shapes[0]->setMaterial(mat1);
+
+  std::shared_ptr<Intersections> inters1 (new Intersections{
+    {
+      Intersection{4, w1.shapes[0].get()},
+      Intersection{6, w1.shapes[0].get()}
+    }
+  });
+
+  Computations comps1 = Computations{ray1, inters1->get(0), inters1};
+
+  EXPECT_EQ(refractedColor(w1, comps1, 0), Color(0,0,0));
+   
+  //  ------------ refracted ray ------------ 
+  World w3 = createDefaultWorld();
+  Ray ray3 = Ray{point(0,0,0.1), vector(0,1,0)};
+  
+  Material mat3_0 = Material(Color(1,1,1), std::shared_ptr<Pattern>(new Pattern()));
+  mat3_0.ambient = 1.0f;
+
+  Material mat3_1 = Material();
+  mat3_1.transparency = 1.0f;
+  mat3_1.refractiveIndex = 1.5f;
+ 
+  w3.shapes[0]->setMaterial(mat3_0);
+  w3.shapes[1]->setMaterial(mat3_1);
+
+
+  std::shared_ptr<Intersections> inters3 (new Intersections{
+    {
+      Intersection{-0.9899, w3.shapes[0].get()},
+      Intersection{-0.4899, w3.shapes[1].get()},
+      Intersection{0.4899, w3.shapes[1].get()},
+      Intersection{0.9899, w3.shapes[0].get()}
+    }
+  });
+
+  Computations comps3 = Computations{ray3, inters3->get(2), inters3};
+
+  EXPECT_EQ(refractedColor(w3, comps3, 5), Color(0,0.99888,0.04725));
+   
+  //  ------------ ShadeHit refracted ray ------------ 
+  World w4 = createDefaultWorld();
+  Ray ray4 = Ray{point(0,0,-3), vector(0,-sqrtf(2)/2,sqrtf(2)/2)};
+
+  Material floorMat = Material();
+  floorMat.transparency = 0.5;
+  floorMat.refractiveIndex = 1.5;
+
+  std::shared_ptr<Shape> floor (new Plane(floorMat));
+  floor->setTransform(Matrix::translate(0, -1, 0));
+
+  Material ballMat = Material(Color(1,0,0));
+  ballMat.ambient = 0.5;
+  std::shared_ptr<Shape> ball (new Sphere(ballMat));
+  ball->setTransform(Matrix::translate(0, -3.5, -0.5));
+
+  w4.addShape(floor);
+  w4.addShape(ball);
+
+  std::shared_ptr<Intersections> inters4 (new Intersections{
+    {
+      Intersection{sqrtf(2), floor.get()},
+    }
+  });
+
+  Computations comps4 = Computations{ray4, inters4->get(0), inters4};
+
+  EXPECT_EQ(shadeHit(w4, comps4, 5), Color(0.93642, 0.68642, 0.68642));
+
+}
 TEST(TestWorld, SchlickReflectionAndRefraction){ 
   
   Ray ray = Ray{point(0,0,-3), vector(0, -sqrtf(2)/2, sqrtf(2)/2)};

@@ -9,7 +9,7 @@
 
 
 Tuple Ray::position(float f) const{
-  return origin + direction * f;
+  return origin + (direction * f);
 }
 
 Ray Ray::translate(float x, float y, float z) const{
