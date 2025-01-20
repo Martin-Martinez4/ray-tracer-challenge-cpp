@@ -30,6 +30,9 @@ set(sources ${sources}
   ${CMAKE_CURRENT_SOURCE_DIR}/Parse/PPM.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Shape.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Cube.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Cone.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Cylinder.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Plane.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Sphere.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Shapes/Intersection.cpp
@@ -50,6 +53,7 @@ set(exsources
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/004_plane.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/005_patterns.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/006_glass.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/exercises/007_cubes.cpp
 )
 
 add_executable(
@@ -101,6 +105,7 @@ set(test_sources ${test_sources}
 
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Intersection_test.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Plane_tests.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Cube_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Sphere_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Ray_test.cpp
 
