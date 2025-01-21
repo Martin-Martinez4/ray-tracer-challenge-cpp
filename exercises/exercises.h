@@ -8,5 +8,6 @@
 #include "005_patterns.h"
 #include "006_glass.h"
 #include "007_cubes.h"
+#include "008_cylinder_and_cone.h"
 
 #endif

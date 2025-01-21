@@ -71,6 +71,17 @@ Computations::Computations(Ray ray, Intersection intersection, std::shared_ptr<I
 
 }
 
+std::ostream& operator<<(std::ostream &os, const Intersection& i){
+  return os << "t: " << i.t << " s: " << i.s << "\n";
+}
+
+std::ostream& operator<<(std::ostream &os, const Intersections& is){
+  for(size_t i = 0; i < is.size(); ++i){
+    os << is.inters[i] << "\n";
+  }
+
+  return os;
+}
 
 std::ostream& operator<<(std::ostream &os, const Computations& c){
  return os 

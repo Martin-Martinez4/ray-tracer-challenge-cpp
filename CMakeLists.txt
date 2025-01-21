@@ -54,6 +54,7 @@ set(exsources
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/005_patterns.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/006_glass.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/exercises/007_cubes.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/exercises/008_cylinder_and_cone.cpp
 )
 
 add_executable(
@@ -105,6 +106,7 @@ set(test_sources ${test_sources}
 
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Intersection_test.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Plane_tests.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Cylinder_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Cube_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Sphere_tests.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/Shapes/Ray_test.cpp

@@ -18,6 +18,8 @@ struct Intersection{
   bool operator==(Intersection const& other) const {
     return (t == other.t && s == other.s);
   }
+
+  friend std::ostream& operator<<(std::ostream &os, const Intersection& i);
 };
 
 struct IntersectionUV: public Intersection{
@@ -49,6 +51,7 @@ public:
     return equal(other);
   }
 
+  friend std::ostream& operator<<(std::ostream &os, const Intersections& is);
   
 
 private:
